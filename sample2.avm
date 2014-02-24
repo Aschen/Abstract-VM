@@ -1,0 +1,8 @@
+;-------------
+;exemple.avm -
+;-------------
+push int32(42)
+push    int16(32)
+assert	float(42.42)
+assert	double(43.43)
+exit
