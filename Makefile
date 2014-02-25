@@ -14,13 +14,16 @@ SRCS	=	sources/Exceptions.cpp \
 		sources/Lexer.cpp \
 		sources/Input.cpp \
 		sources/Parser.cpp \
+		sources/Factory.cpp \
+		sources/Operand.cpp \
+		sources/Transform.cpp \
 		sources/main.cpp
 
 CXXFLAGS=	-Wall -W -Wextra -Iincludes
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-NAME	=	test
+NAME	=	avm
 
 all:	$(NAME)
 
@@ -37,7 +40,3 @@ fclean:	clean
 	rm -f $(NAME)
 
 re: fclean all
-
-diff: re
-	./$(NAME) > output
-	diff --suppress-common-line output diff | colordiff

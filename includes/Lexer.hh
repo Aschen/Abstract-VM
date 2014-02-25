@@ -1,10 +1,10 @@
-#ifndef LEXER_HH
-#define LEXER_HH
-
 #include "AbstractVm.hh"
 #include "Exceptions.hh"
 
-#define ISNUM(c)    ((c) >= '0' && (c) <= '9')
+#ifndef LEXER_HH
+# define LEXER_HH
+
+# define ISNUM(c)    ((c) >= '0' && (c) <= '9')
 
 class   Lexer
 {
@@ -31,7 +31,5 @@ private:
     bool                readNumber(const std::string &tok);
     bool                readDecimal(const std::string &tok);
 };
-// typedef std::pair<eTokenType, std::string>      Token;
-// typedef std::map<std::string, eTokenType>       TokenMap;
 
 #endif // LEXER_HH

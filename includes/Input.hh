@@ -1,16 +1,17 @@
+#include <fstream>
+#include "AbstractVm.hh"
+
 #ifndef INPUT_HH
 #define INPUT_HH
 
-#include <fstream>
-#include <sstream>
-#include "AbstractVm.hh"
 
 class   Input
 {
 private:
     std::string   _buf;
+    eFlag         _flag;
 public:
-    Input(void);
+    Input(eFlag flag);
     Input(const std::string &file);
     ~Input(void);
     Input   &operator=(const Input &cpy);

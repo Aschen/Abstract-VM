@@ -1,8 +1,9 @@
+#include <valgrind/memcheck.h>
 #include "Parser.hh"
 #include "Exceptions.hh"
 
 
-Parser::Parser(const std::vector<Token> &tokenList) : _tokenList(tokenList)
+Parser::Parser(const std::vector<Token> &tokenList, eFlag flag) : _tokenList(tokenList), _flag(flag)
 {
     _types["int8"] = Int8;
     _types["int16"] = Int16;
@@ -40,7 +41,7 @@ Parser::Parser(const std::vector<Token> &tokenList) : _tokenList(tokenList)
     this->parse();
 }
 
-Parser::Parser(const Parser &cpy) : _tokenList(cpy._tokenList), _types(cpy._types)
+Parser::Parser(const Parser &cpy) : _tokenList(cpy._tokenList), _types(cpy._types), _flag(cpy._flag)
 {
     this->parse();
 }
@@ -49,17 +50,19 @@ void Parser::parse(void)
 {
     std::vector<Token>::const_iterator  it = _tokenList.begin();
 
+    while (it->first == SEP)
+        ++it;
     while ((it = this->readInstructionLine(it)) != _tokenList.end())
         ;
-    if (!this->readExit())
-        throw ParserException("Unable to find \"exit\" instruction.");
+    if (_flag == NORMAL)
+        if (!this->readExit())
+            throw ParserException("Unable to find \"exit\" instruction.");
 }
 
 TokenCIterator &Parser::readInstructionLine(TokenCIterator &it)
 {
     it = this->readInstruction(it);
-    this->readSeparator(it);
-    ++it;
+    it = this->readSeparator(it);
     return it;
 }
 
@@ -69,23 +72,26 @@ TokenCIterator &Parser::readInstruction(TokenCIterator &it)
     eOperandType    valueType = Null;
     std::string     value = "";
 
-    if (it->first > VINSTR)
+    if (it != _tokenList.end())
     {
-        if (it != _tokenList.begin())
-            throw ParserException("Expected Instruction token", it->second, (it - 1)->second);
-        else
-            throw ParserException("Expected Instruction token", it->second);
-    }
-    instrType = _instructions[it->second];
-    if (it->first == VINSTR)
-    {
+        if (it->first > VINSTR)
+        {
+            if (it != _tokenList.begin())
+                throw ParserException("Expected Instruction token", it->second, (it - 1)->second);
+            else
+                throw ParserException("Expected Instruction token", it->second);
+        }
+        instrType = _instructions[it->second];
+        if (it->first == VINSTR)
+        {
+            ++it;
+            valueType = this->readValueType(it);
+            ++it;
+            value = this->readValue(it, valueType);
+        }
+        _instrList.push_back(Instruction(instrType, Value(valueType, value)));
         ++it;
-        valueType = this->readValueType(it);
-        ++it;
-        value = this->readValue(it, valueType);
     }
-    _instrList.push_back(Instruction(instrType, Value(valueType, value)));
-    ++it;
     return it;
 }
 
@@ -110,10 +116,16 @@ std::string Parser::readValue(TokenCIterator &it, eOperandType type)
     return value;
 }
 
-void Parser::readSeparator(TokenCIterator &it)
+TokenCIterator &Parser::readSeparator(TokenCIterator &it)
 {
-    if (it->first != SEP)
-        throw ParserException("Expected Separator token", it->second, (it - 1)->second);
+    if (it != _tokenList.end())
+    {
+        if (it->first != SEP)
+            throw ParserException("Expected Separator token", it->second, (it - 1)->second);
+        while (it->first == SEP)
+            ++it;
+    }
+    return it;
 }
 
 bool Parser::readExit(void)

@@ -1,7 +1,7 @@
+#include "AbstractVm.hh"
+
 #ifndef PARSER_HH
 #define PARSER_HH
-
-#include "AbstractVm.hh"
 
 class   Parser
 {
@@ -14,8 +14,9 @@ private:
     std::vector<Instruction>    _instrList;
     TypeMap                     _types;
     InstructionMap              _instructions;
+    eFlag                       _flag;
 public:
-    Parser(const std::vector<Token> &tokenList);
+    Parser(const std::vector<Token> &tokenList, eFlag flag);
     ~Parser(void) {}
     Parser(const Parser &cpy);
 
@@ -26,7 +27,7 @@ private:
     TokenCIterator  &readInstruction(TokenCIterator &it);
     eOperandType    readValueType(TokenCIterator &it);
     std::string     readValue(TokenCIterator &it, eOperandType type);
-    void            readSeparator(TokenCIterator &it);
+    TokenCIterator  &readSeparator(TokenCIterator &it);
     bool            readExit(void);
 };
 

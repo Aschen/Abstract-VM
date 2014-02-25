@@ -1,7 +1,7 @@
+#include "AbstractVm.hh"
+
 #ifndef EXCEPTIONS_HH
 #define EXCEPTIONS_HH
-
-#include "AbstractVm.hh"
 
 class   AvmException : public std::exception
 {

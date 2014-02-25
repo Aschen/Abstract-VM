@@ -1,9 +1,9 @@
 //
 // AbstractVm.hh for  in /home/brunne_r/Public/abstract_vm/cpp_abstractvm/includes
-// 
+//
 // Made by brunne-r
 // Login   <brunne-r@epitech.net>
-// 
+//
 // Started on  Thu Feb 20 16:02:48 2014 brunne-r
 // Last update Fri Feb 21 14:22:18 2014 brunne-r
 //
@@ -20,9 +20,6 @@ typedef enum	eOperandType
     Double
   }		eOperandType;
 
-# define int8	char
-# define int16	short
-# define int32	int
 
 # include <string>
 # include <sstream>
