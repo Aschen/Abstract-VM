@@ -17,6 +17,8 @@ SRCS	=	sources/Exceptions.cpp \
 		sources/Factory.cpp \
 		sources/Operand.cpp \
 		sources/Transform.cpp \
+		sources/Limits.cpp \
+		sources/VmStack.cpp \
 		sources/main.cpp
 
 CXXFLAGS=	-Wall -W -Wextra -Iincludes

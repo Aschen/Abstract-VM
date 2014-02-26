@@ -9,6 +9,7 @@
 //
 
 #include "Factory.hh"
+#include "Limits.hh"
 
 IOperand	*Factory::createOperand(eOperandType type, const std::string& value)
 {
@@ -26,25 +27,30 @@ IOperand	*Factory::createOperand(eOperandType type, const std::string& value)
 
 IOperand *Factory::createInt8(const std::string& value)
 {
+  Limits::check<int8>(value);
   return new Operand<int8>(value, Int8);
 }
 
 IOperand *Factory::createInt16(const std::string& value)
 {
+  Limits::check<int16>(value);
   return new Operand<int16>(value, Int16);
 }
 
 IOperand *Factory::createInt32(const std::string& value)
 {
+  Limits::check<int32>(value);
   return new Operand<int32>(value, Int32);
 }
 
 IOperand *Factory::createFloat(const std::string& value)
 {
+  Limits::check<float>(value);
   return new Operand<float>(value, Float);
 }
 
 IOperand *Factory::createDouble(const std::string& value)
 {
+  Limits::check<double>(value);
   return new Operand<double>(value, Double);
 }
