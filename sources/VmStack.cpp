@@ -127,9 +127,10 @@ bool		VmStack::prepareOp(IOperand **a, IOperand **b)
 	{
 	  if ((*b)->getPrecision() > (*a)->getPrecision())
 	    {
+	      std::cout << "Exchange" << std::endl;
 	      tmp = *b;
 	      *b = *a;
-	      *b = tmp;
+	      *a = tmp;
 	    }
 	}
     }

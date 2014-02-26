@@ -1,9 +1,9 @@
 //
 // AvmCore.cpp for  in /home/brunne_r/Public/abstract_vm/cpp_abstractvm/sources
-// 
+//
 // Made by brunne-r
 // Login   <brunne-r@epitech.net>
-// 
+//
 // Started on  Wed Feb 26 15:35:36 2014 brunne-r
 // Last update Wed Feb 26 15:42:26 2014 brunne-r
 //
@@ -17,7 +17,7 @@ AvmCore::AvmCore()
 AvmCore::~AvmCore()
 {
 }
-  
+
 void	AvmCore::run(const std::vector<Instruction> &list)
 {
   bool						state(true);
@@ -28,6 +28,7 @@ void	AvmCore::run(const std::vector<Instruction> &list)
   while (it < end && state)
     {
       state = this->_Stack.exec(*it);
+      ++it;
     }
   if (it >= end)
     std::cerr << "Avm successfully exit" << std::endl;
