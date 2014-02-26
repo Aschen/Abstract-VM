@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Mon Feb 24 12:39:02 2014 brunne-r
-// Last update Wed Feb 26 17:02:56 2014 brunne-r
+// Last update Wed Feb 26 17:23:04 2014 brunne-r
 //
 
 #include "VmStack.hh"
@@ -119,14 +119,11 @@ bool		VmStack::prepareOp(IOperand **a, IOperand **b)
       this->stack.pop_back();
       if (!*a || !*b)
 	return false;
-      else
+      if ((*b)->getPrecision() > (*a)->getPrecision())
 	{
-	  if ((*b)->getPrecision() > (*a)->getPrecision())
-	    {
-	      tmp = *b;
-	      *b = *a;
-	      *a = tmp;
-	    }
+	  tmp = *a;
+	  *a = Factory::createOperand((*b)->getType(), (*a)->toString());
+	  delete tmp;
 	}
     }
   return true;
