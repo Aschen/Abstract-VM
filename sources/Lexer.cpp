@@ -133,6 +133,8 @@ bool Lexer::readNumber(const std::string &tok)
 {
     unsigned int    i = 0;
 
+    if (!ISNUM(tok[i]) && tok[i++] != '-')
+        return false;
     while (i < tok.length())
     {
         if (!ISNUM(tok[i++]))
@@ -147,6 +149,8 @@ bool Lexer::readDecimal(const std::string &tok)
     unsigned int    i = 0;
 
     if (count(tok.begin(), tok.end(), '.') > 1)
+        return false;
+    if (!ISNUM(tok[i]) && tok[i++] != '-')
         return false;
     while (i < tok.length())
     {

@@ -21,10 +21,6 @@ int main(int ac, char **av)
     std::vector<Instruction> instrList;
     AvmCore		     core;
 
-    int	i = 0;
-    while (av[i])
-      std::cout << av[i++] << std::endl;
-
     try
     {
         if (ac > 1 && ac <= 3)

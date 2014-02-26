@@ -1,9 +1,9 @@
 ;-------------
-;exemple.avm -
+; 
 ;-------------
-push    int8(500)
-push    int32(33)
+push    int32(--128)
+push    int32(0)
 dump
-add
+sub
 dump
 exit
