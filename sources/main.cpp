@@ -49,7 +49,7 @@ int main(int ac, char **av)
     catch (AvmException &e)
     {
         std::cerr << e.getMessage() << std::endl;
-        return 0;
+        return -1;
     }
     return 0;
 }

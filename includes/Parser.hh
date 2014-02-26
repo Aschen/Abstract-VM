@@ -13,9 +13,9 @@ public:
         const std::string   _token;
         const std::string   _prevToken;
     public:
-        Error(const std::string error);
-        Error(const std::string error, const std::string &token, const std::string &prevToken);
-        Error(const std::string error, const std::string &token);
+        Error(const std::string &error);
+        Error(const std::string &error, const std::string &token, const std::string &prevToken);
+        Error(const std::string &error, const std::string &token);
         ~Error(void) throw() {}
         const std::string   getMessage(void) const;
     };
@@ -38,11 +38,11 @@ public:
     std::vector<Instruction>	getInstructions(void) const;
 private:
     void            parse(void);
-    TokenCIterator  &readInstructionLine(TokenCIterator &it);
-    TokenCIterator  &readInstruction(TokenCIterator &it);
+    void            readInstructionLine(TokenCIterator &it);
+    void            readInstruction(TokenCIterator &it);
     eOperandType    readValueType(TokenCIterator &it);
     std::string     readValue(TokenCIterator &it, eOperandType type);
-    TokenCIterator  &readSeparator(TokenCIterator &it);
+    void            readSeparator(TokenCIterator &it);
     bool            readExit(void);
 };
 

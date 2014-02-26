@@ -14,6 +14,7 @@
 # define int16	short
 # define int32	int
 
+
 typedef enum    e_flag
 {
     INTERACTIVE = 42,
