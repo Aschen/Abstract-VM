@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Mon Feb 24 12:39:02 2014 brunne-r
-// Last update Wed Feb 26 17:23:04 2014 brunne-r
+// Last update Wed Feb 26 19:23:55 2014 brunne-r
 //
 
 #include "VmStack.hh"
@@ -245,6 +245,6 @@ const std::string VmStack::Error::getMessage(void) const
 {
     std::stringstream   ss;
 
-    ss << this->_type << " Error : " << this->getError() << std::endl;
+    ss << this->_type << " Error : " << this->getError();
     return ss.str();
 }

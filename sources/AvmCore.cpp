@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Wed Feb 26 15:35:36 2014 brunne-r
-// Last update Wed Feb 26 19:18:12 2014 brunne-r
+// Last update Wed Feb 26 19:23:26 2014 brunne-r
 //
 
 #include "AvmCore.hh"
@@ -48,6 +48,6 @@ const std::string AvmCore::Error::getMessage(void) const
 {
     std::stringstream   ss;
 
-    ss << "Execution Error : " << this->getError() << std::endl;
+    ss << "Execution Error : " << this->getError();
     return ss.str();
 }

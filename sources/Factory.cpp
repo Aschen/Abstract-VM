@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Wed Feb 19 13:37:06 2014 brunne-r
-// Last update Wed Feb 26 17:36:27 2014 brunne-r
+// Last update Wed Feb 26 19:26:42 2014 brunne-r
 //
 
 #include "Factory.hh"
@@ -69,6 +69,6 @@ const std::string Factory::Error::getMessage(void) const
 {
     std::stringstream   ss;
 
-    ss << "Error : " << this->getError() << std::endl;
+    ss << "Error : " << this->getError();
     return ss.str();
 }

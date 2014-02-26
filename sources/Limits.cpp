@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 25 11:53:36 2014 brunne-r
-// Last update Wed Feb 26 18:00:13 2014 brunne-r
+// Last update Wed Feb 26 19:22:56 2014 brunne-r
 //
 
 #include "Limits.hh"
@@ -35,7 +35,7 @@ const std::string Limits::Error::getMessage(void) const
 {
     std::stringstream   ss;
 
-    ss << "Limit reach : " << this->getError() << std::endl;
+    ss << "Limit reach : " << this->getError();
     return ss.str();
 }
 
