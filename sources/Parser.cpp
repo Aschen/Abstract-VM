@@ -151,6 +151,11 @@ void Parser::dumpInstruction(void)
     }
 }
 
+std::vector<Instruction>	Parser::getInstructions(void) const
+{
+  return _instrList;
+}
+
 ////////////////////
 // Parser::Error  //
 ////////////////////

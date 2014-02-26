@@ -1,7 +1,9 @@
+#include "AbstractVm.hh"
 #include "Input.hh"
 #include "Lexer.hh"
 #include "Parser.hh"
 #include "Exceptions.hh"
+#include "AvmCore.hh"
 
 int printUsage(char *name)
 {
@@ -16,6 +18,8 @@ int printUsage(char *name)
 int main(int ac, char **av)
 {
     std::string buf;
+    std::vector<Instruction> instrList;
+    AvmCore		     core;
 
     try
     {
@@ -26,8 +30,11 @@ int main(int ac, char **av)
                 return printUsage(av[0]);
             else if (arg1 == "-i" || arg1 == "--interactive")
                 Input(eFlag(INTERACTIVE));
-            else if (arg1 == "-f" && ac > 2)
+            else if (arg1 == "-f" && ac == 3)
+	      {
+		std::cout << "lolpd" << ac << std::endl;
                 buf = (Input(av[2])).getBuf();
+	      }
             else
                 return printUsage(av[0]);
         }
@@ -35,7 +42,10 @@ int main(int ac, char **av)
             buf = (Input(NORMAL)).getBuf();
         else
             return printUsage(av[0]);
-        Parser(Lexer(buf).getTokens(), NORMAL).dumpInstruction();
+	std::cerr << "Parser" << std::endl;
+        instrList = Parser(Lexer(buf).getTokens(), NORMAL).getInstructions();
+	std::cerr << "Core" << std::endl;
+	core.run(instrList);
     }
     catch (AvmException &e)
     {

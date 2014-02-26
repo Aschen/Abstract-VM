@@ -35,6 +35,7 @@ public:
     Parser(const Parser &cpy);
 
     void            dumpInstruction(void);
+    std::vector<Instruction>	getInstructions(void) const;
 private:
     void            parse(void);
     TokenCIterator  &readInstructionLine(TokenCIterator &it);
