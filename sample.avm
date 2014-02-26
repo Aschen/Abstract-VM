@@ -1,9 +1,8 @@
 ;-------------
 ;exemple.avm -
 ;-------------
-push    int8(500)
+push    double(1.5)
 push    int32(33)
-dump
-add
+div
 dump
 exit
