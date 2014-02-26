@@ -5,14 +5,15 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Wed Feb 19 13:37:06 2014 brunne-r
-// Last update Fri Feb 21 12:22:06 2014 brunne-r
+// Last update Wed Feb 26 17:36:27 2014 brunne-r
 //
 
 #include "Factory.hh"
 #include "Limits.hh"
 
-IOperand	*Factory::createOperand(eOperandType type, const std::string& value)
+IOperand		*Factory::createOperand(eOperandType type, const std::string& value)
 {
+  IOperand		*op;
   memptr_Factory	tabPtr[5];
   memptr_Factory	actu;
 
@@ -22,7 +23,12 @@ IOperand	*Factory::createOperand(eOperandType type, const std::string& value)
   tabPtr[Float] = &Factory::createFloat;
   tabPtr[Double] = &Factory::createDouble;
   actu = tabPtr[type];
-  return (*actu)(value);
+  op = (*actu)(value);
+  if (op)
+    return op;
+  else
+    throw Factory::Error("not enough memory");
+  return op;
 }
 
 IOperand *Factory::createInt8(const std::string& value)
@@ -53,4 +59,16 @@ IOperand *Factory::createDouble(const std::string& value)
 {
   Limits::check<double>(value);
   return new Operand<double>(value, Double);
+}
+
+Factory::Error::Error(const std::string error) : AvmException(error)
+{
+}
+
+const std::string Factory::Error::getMessage(void) const
+{
+    std::stringstream   ss;
+
+    ss << "Error : " << this->getError() << std::endl;
+    return ss.str();
 }
