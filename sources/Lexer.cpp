@@ -30,12 +30,14 @@ Lexer::Lexer(const std::string &input) : _input(input), _inputStream(input)
     this->_aff[NUMBER] = "NUMBER";
     this->_aff[DECIMAL] = "DECIMAL";
     this->_aff[UNKNOWN] = "UNKNOWN";
-    this->tokenize();
+    if (_input.length())
+        this->tokenize();
 }
 
 Lexer::Lexer(const Lexer &cpy) : _input(cpy._input), _inputStream(cpy._input), _tokenList(cpy._tokenList), _tokens(cpy._tokens)
 {
-    this->tokenize();
+    if (_input.length())
+        this->tokenize();
 }
 
 void                Lexer::dumpTokens(void)

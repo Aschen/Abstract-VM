@@ -23,8 +23,8 @@ int main(int ac, char **av)
     try
     {
         if (ac > 1 && ac <= 3)
-        {
-            std::string arg1(av[1]);
+        {            
+           std::string arg1(av[1]);
             if (arg1 == "-h" || arg1 == "--help")
                 return printUsage(av[0]);
             else if (arg1 == "-i" || arg1 == "--interactive")

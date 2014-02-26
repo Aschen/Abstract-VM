@@ -22,7 +22,9 @@ Input::Input(eFlag flag) : _flag(flag)
                 core.run(pars.getInstructions());
             }
             else
+            {
                 _buf += this->epurLine(buf);
+            }
         }
     }
     if (_flag == INTERACTIVE)
