@@ -94,7 +94,7 @@ bool Lexer::readValue(const std::string &tok)
 {
     std::string         type;
     std::string         value;
-    size_t	        pos = tok.find('(');
+    size_t  	        pos = tok.find('(');
     TokenMap::iterator  it;
 
     type = tok.substr(0, pos);
@@ -104,29 +104,20 @@ bool Lexer::readValue(const std::string &tok)
         throw Error(_line, _word, "Missing '(' or ')' near " + tok);
     if (tok.find(')', pos) + 1 != tok.length())
         throw Error(_line, _word, "Reading garbage after value. ( '" + tok.substr(tok.find(')', pos) + 1) + "')");
-
     value = tok.substr(pos + 1, tok.find(')', pos + 1) - pos - 1);
     if (value.length() == 0)
         throw Error(_line, _word, "Invalid empty value '" + tok + "'");
-//  std::cout << "Add token " << _aff[it->second] << " : " << type << std::endl;
     _tokenList.push_back(Token(it->second, type));
     if (this->readDecimal(value))
-    {
-   //            std::cout << "Add token " << _aff[NUMBER] << " : " << value << std::endl;
         _tokenList.push_back(Token(DECIMAL, value));
-        return true;
-    }
     else if (this->readNumber(value))
-    {
-      //          std::cout << "Add token " << _aff[DECIMAL] << " : " << value << std::endl;
         _tokenList.push_back(Token(NUMBER, value));
-        return true;
-    }
     else
     {
       _tokenList.pop_back();
       throw Error(_line, _word, "Invalid value '" + tok.substr(pos) + "'");
     }
+    return true;
 }
 
 bool Lexer::readNumber(const std::string &tok)
@@ -148,7 +139,7 @@ bool Lexer::readDecimal(const std::string &tok)
 {
     unsigned int    i = 0;
 
-    if (count(tok.begin(), tok.end(), '.') > 1)
+    if (count(tok.begin(), tok.end(), '.') != 1 )
         return false;
     if (!ISNUM(tok[i]) && tok[i++] != '-')
         return false;
