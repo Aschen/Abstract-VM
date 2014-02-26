@@ -1,0 +1,8 @@
+;-------------
+; Qu'on mette 1 ou 20 zero derriere la virgule => overflow
+; bug aussi avec float(1003.20)
+;-------------
+push    int8(1)
+push    float(1003.0000000000000000000000000000000)
+dump
+exit

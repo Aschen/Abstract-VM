@@ -1,0 +1,7 @@
+;-------------
+;Supprimer les zero initiaux ?
+;-------------
+push    int8(00000000000000000000000000000000000000000000001)
+push    float(1003.1)
+dump
+exit

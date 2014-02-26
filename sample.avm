@@ -1,15 +1,7 @@
 ;-------------
 ; 
 ;-------------
-<<<<<<< HEAD
-push    int32(--128)
-push    int32(0)
-dump
-sub
-=======
-push    double(1.5)
-push    int32(33)
-div
->>>>>>> a6537871723ac55529d86d40b57cff137ccf242b
-dump
+push	double(1.53)
+push	float(3.23)
+add
 exit
