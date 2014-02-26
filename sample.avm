@@ -1,7 +1,7 @@
 ;-------------
 ;exemple.avm -
 ;-------------
-push    double(32.2)
+push    int8(500)
 push    int32(33)
 dump
 add

@@ -94,7 +94,7 @@ bool Lexer::readValue(const std::string &tok)
 {
     std::string         type;
     std::string         value;
-    unsigned int        pos = tok.find('(');
+    size_t	        pos = tok.find('(');
     TokenMap::iterator  it;
 
     type = tok.substr(0, pos);

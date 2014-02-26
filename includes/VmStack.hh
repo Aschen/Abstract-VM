@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Mon Feb 24 12:20:26 2014 brunne-r
-// Last update Wed Feb 26 15:31:18 2014 brunne-r
+// Last update Wed Feb 26 16:56:46 2014 brunne-r
 //
 
 
@@ -15,9 +15,20 @@
 #include "AbstractVm.hh"
 #include "IOperand.hh"
 #include "Factory.hh"
+#include "Exceptions.hh"
 
 class VmStack
 {
+public:
+    class   Error : public AvmException
+    {
+    private:
+      std::string _type;
+    public:
+      Error(const std::string type, const std::string error);
+      ~Error(void) throw() {}
+      const std::string   getMessage(void) const;
+    };
   typedef bool	(VmStack::*StackMem)(void);
 private:
   std::vector<IOperand*>	stack;

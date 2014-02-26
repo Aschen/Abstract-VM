@@ -21,6 +21,10 @@ int main(int ac, char **av)
     std::vector<Instruction> instrList;
     AvmCore		     core;
 
+    int	i = 0;
+    while (av[i])
+      std::cout << av[i++] << std::endl;
+
     try
     {
         if (ac > 1 && ac <= 3)
@@ -31,10 +35,7 @@ int main(int ac, char **av)
             else if (arg1 == "-i" || arg1 == "--interactive")
                 Input(eFlag(INTERACTIVE));
             else if (arg1 == "-f" && ac == 3)
-	      {
-                std::cout << "lolpd" << ac << std::endl;
                 buf = (Input(av[2])).getBuf();
-	      }
             else
                 return printUsage(av[0]);
         }
@@ -42,9 +43,7 @@ int main(int ac, char **av)
             buf = (Input(NORMAL)).getBuf();
         else
             return printUsage(av[0]);
-	std::cerr << "Parser" << std::endl;
         instrList = Parser(Lexer(buf).getTokens(), NORMAL).getInstructions();
-	std::cerr << "Core" << std::endl;
 	core.run(instrList);
     }
     catch (AvmException &e)

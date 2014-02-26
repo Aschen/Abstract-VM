@@ -52,7 +52,7 @@ std::string Input::getBuf(void) const
 std::string Input::epurLine(std::string line)
 {
     std::string     ret = line.substr(0, line.find(';', 0));
-    unsigned int    pos = 0;
+    size_t	    pos = 0;
 
     while ((pos = ret.find("##", pos)) != ret.npos)
         ret.replace(pos, 2, "");

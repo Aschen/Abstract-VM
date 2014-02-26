@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 25 11:53:36 2014 brunne-r
-// Last update Wed Feb 26 14:38:21 2014 brunne-r
+// Last update Wed Feb 26 16:32:23 2014 brunne-r
 //
 
 #include "Limits.hh"
@@ -21,10 +21,22 @@ void		Limits::check(const std::string &value)
   if (test != value)
     {
       if (value[0] == '-')
-	std::cerr << "underflow" << std::endl;
+	throw Limits::Error("underflow");
       else
-	std::cerr << "overflow" << std::endl;
+	throw Limits::Error("overflow");
     }
+}
+
+Limits::Error::Error(const std::string error) : AvmException(error)
+{
+}
+
+const std::string Limits::Error::getMessage(void) const
+{
+    std::stringstream   ss;
+
+    ss << "Limit reach : " << this->getError() << std::endl;
+    return ss.str();
 }
 
 template void Limits::check<int8>(const std::string &value);

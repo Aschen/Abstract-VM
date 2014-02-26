@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Mon Feb 24 12:39:02 2014 brunne-r
-// Last update Wed Feb 26 15:30:23 2014 brunne-r
+// Last update Wed Feb 26 17:02:56 2014 brunne-r
 //
 
 #include "VmStack.hh"
@@ -57,7 +57,7 @@ bool	VmStack::pop(void)
 {
   if (this->stack.empty())
     {
-      std::cerr << "pop on a empty stack" << std::endl;
+      throw VmStack::Error("Stack","pop on a empty stack");
       return false;
     }
   else
@@ -72,15 +72,11 @@ bool	VmStack::dump(void)
   std::vector<IOperand*>::const_iterator beg, end;
 
   if (this->stack.empty())
-    {
-      std::cerr << "dump on a empty stack" << std::endl;
-      return false;
-    }
+    return true;
   else
     {
-      beg = this->stack.begin();
       end = this->stack.end();
-      for (; beg < end; beg++)
+      for (beg = this->stack.begin(); beg < end; beg++)
 	{
 	  std::cout << (*beg)->toString() << std::endl;
 	}
@@ -94,14 +90,14 @@ bool		VmStack::assert(void)
 
   if (this->stack.empty())
     {
-      std::cerr << "assert on a empty stack" << std::endl;
+      throw VmStack::Error("Stack", "assert on a empty stack");
       return false;
     }
   else
     {
       last = this->stack.back();
-      if (!last || last->toString() != this->argument.second)
-	std::cerr << "assert is false" << std::endl;
+      if (!last || last->toString() != this->argument.second || last->getType() != this->argument.first)
+	throw VmStack::Error("Execution", "assert is not verify");
     }
   return true;
 }
@@ -112,7 +108,7 @@ bool		VmStack::prepareOp(IOperand **a, IOperand **b)
 
   if (this->stack.size() < 2)
     {
-      std::cerr << "arithmetic operations requires 2 values at least" << std::endl;
+      throw VmStack::Error("Stack", "arithmetic operations requires 2 values at least");
       return false;
     }
   else
@@ -127,7 +123,6 @@ bool		VmStack::prepareOp(IOperand **a, IOperand **b)
 	{
 	  if ((*b)->getPrecision() > (*a)->getPrecision())
 	    {
-	      std::cout << "Exchange" << std::endl;
 	      tmp = *b;
 	      *b = *a;
 	      *a = tmp;
@@ -169,6 +164,8 @@ bool		VmStack::div(void)
 
   if (!this->prepareOp(&a, &b))
     return false;
+  if (b->toString() == "0")
+    throw VmStack::Error("Floating", "division by 0");
   c = (*a) / (*b);
   delete a;
   delete b;
@@ -195,6 +192,8 @@ bool		VmStack::mod(void)
 
   if (!this->prepareOp(&a, &b))
     return false;
+  if (b->toString() == "0")
+    throw VmStack::Error("Floating", "modulo by 0");
   c = (*a) % (*b);
   delete a;
   delete b;
@@ -208,16 +207,16 @@ bool		VmStack::print(void)
 
   if (this->stack.empty())
     {
-      std::cerr << "print on a empty stack" << std::endl;
+      throw VmStack::Error("Stack", "print on a empty stack");
       return false;
     }
   else
     {
       p = this->stack.back();
       if (p->getType() == Int8)
-	std::cout << p->toString() << std::endl;
+	std::cout << Transform::stringToValue<int8>(p->toString()) << std::endl;
       else
-	std::cerr << "print on a no-Int8 value" << std::endl;
+	throw VmStack::Error("Execution", "print on a non-int8 value");
     }
   return true;
 }
@@ -239,4 +238,16 @@ bool		VmStack::exec(Instruction instr)
     }
   ptr = this->fptr[instr.first];
   return ((this->*ptr)());
+}
+
+VmStack::Error::Error(const std::string type, const std::string error) : AvmException(error), _type(type)
+{
+}
+
+const std::string VmStack::Error::getMessage(void) const
+{
+    std::stringstream   ss;
+
+    ss << this->_type << " Error : " << this->getError() << std::endl;
+    return ss.str();
 }
