@@ -8,9 +8,9 @@ Input::Input(eFlag flag) : _flag(flag)
     std::string buf;
     AvmCore     core;
 
-    while (1)
+    while (std::getline(std::cin, buf, '\n'))
     {
-        std::getline(std::cin, buf, '\n');
+
         if (buf == ";;" || (_flag == INTERACTIVE && buf == "exit"))
             break;
         else if (buf.length() > 0)

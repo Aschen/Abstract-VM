@@ -33,7 +33,9 @@ int main(int ac, char **av)
                 return 0;
             }
             else if (arg1 == "-f" && ac == 3)
+            {
                 buf = (Input(av[2])).getBuf();
+            }
             else
                 return printUsage(av[0]);
         }
@@ -43,7 +45,6 @@ int main(int ac, char **av)
             return printUsage(av[0]);
         Lexer   lex(buf);
         Parser  pars(lex.getTokens(), NORMAL);
-
         core.run(pars.getInstructions());
     }
     catch (AvmException &e)

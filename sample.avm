@@ -2,7 +2,8 @@
 ; 
 ;-------------
 push	int8(001)
-push
 push	double(0033.800)
+dump
 add
+dump
 exit
