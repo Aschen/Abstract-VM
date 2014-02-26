@@ -30,8 +30,4 @@ void	AvmCore::run(const std::vector<Instruction> &list)
       state = this->_Stack.exec(*it);
       ++it;
     }
-  if (it >= end)
-    std::cerr << "Avm successfully exit" << std::endl;
-  else
-    std::cerr << "Avm Error" << std::endl;
 }

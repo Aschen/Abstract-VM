@@ -1,10 +1,12 @@
 #include "Input.hh"
 #include "Lexer.hh"
 #include "Parser.hh"
+#include "AvmCore.hh"
 
 Input::Input(eFlag flag) : _flag(flag)
 {
     std::string buf;
+    AvmCore     core;
 
     while (1)
     {
@@ -14,7 +16,11 @@ Input::Input(eFlag flag) : _flag(flag)
         else if (buf.length() > 0)
         {
             if (_flag == INTERACTIVE)
-                Parser(Lexer(this->epurLine(buf)).getTokens(), INTERACTIVE).dumpInstruction();
+            {
+                Lexer       lex(this->epurLine(buf));
+                Parser      pars(lex.getTokens(), INTERACTIVE);
+                core.run(pars.getInstructions());
+            }
             else
                 _buf += this->epurLine(buf);
         }

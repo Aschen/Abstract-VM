@@ -28,7 +28,10 @@ int main(int ac, char **av)
             if (arg1 == "-h" || arg1 == "--help")
                 return printUsage(av[0]);
             else if (arg1 == "-i" || arg1 == "--interactive")
+            {
                 Input(eFlag(INTERACTIVE));
+                return 0;
+            }
             else if (arg1 == "-f" && ac == 3)
                 buf = (Input(av[2])).getBuf();
             else
@@ -39,7 +42,6 @@ int main(int ac, char **av)
         else
             return printUsage(av[0]);
         Lexer   lex(buf);
-        lex.dumpTokens();
         Parser  pars(lex.getTokens(), NORMAL);
 
         core.run(pars.getInstructions());
