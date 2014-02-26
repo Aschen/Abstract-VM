@@ -5,31 +5,36 @@
 // Login   <brunne-r@epitech.net>
 // 
 // Started on  Mon Feb 24 12:20:26 2014 brunne-r
-// Last update Mon Feb 24 12:39:54 2014 brunne-r
+// Last update Mon Feb 24 16:59:22 2014 brunne-r
 //
 
 #ifndef VMSTACK_H
 # define VMSTACK_H
 
-#include "AbstractVm.h"
+#include "AbstractVm.hh"
+
 
 class VmStack
 {
+  typedef	bool	(VmStack::*VmStackMember)(void);
 private:
-  std::vector<IOperand*> stack;
+  std::vector<IOperand*>	stack;
+  VmStackMember			operations[5];
+  std::string			argument;
 public:
-  VmStack();
-  ~VmStack();
+  VmStack(void);
+  ~VmStack(void);
   bool	pop(void);
-  bool	dump(void) const;
-  bool	assert(const std::string &value) const;
+  bool	dump(void);
+  bool	assert(void);
+  bool	prepareOp(IOperand **a, IOperand **b);
   bool	add(void);
   bool	sub(void);
   bool	mul(void);
   bool	div(void);
   bool	mod(void);
-  bool	print(void) const;
-  void	exit(void) const;
+  bool	print(void);
+  bool	exit(void);
 public:
   bool	exec(Instruction instr);
 };
