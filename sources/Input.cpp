@@ -25,6 +25,7 @@ Input::Input(eFlag flag) : _flag(flag)
                 _buf += this->epurLine(buf);
         }
     }
+    core.check();
 }
 
 Input::Input(const std::string &file) : _flag(NORMAL)

@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 // 
 // Started on  Wed Feb 26 14:42:30 2014 brunne-r
-// Last update Wed Feb 26 19:00:44 2014 brunne-r
+// Last update Wed Feb 26 19:18:17 2014 brunne-r
 //
 
 #ifndef AVMCORE_H
@@ -32,6 +32,7 @@ public:
   AvmCore();
   ~AvmCore();
   void		run(const std::vector<Instruction> &list);
+  void		check(void) const;
 };
 
 #endif /* !AVMCORE_H */

@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Wed Feb 26 15:35:36 2014 brunne-r
-// Last update Wed Feb 26 18:59:50 2014 brunne-r
+// Last update Wed Feb 26 19:18:12 2014 brunne-r
 //
 
 #include "AvmCore.hh"
@@ -15,6 +15,10 @@ AvmCore::AvmCore() : _ex(false)
 }
 
 AvmCore::~AvmCore()
+{
+}
+
+void	AvmCore::check(void) const
 {
   if (!this->_ex)
     throw AvmCore::Error("unable to find \"exit\" instruction");
