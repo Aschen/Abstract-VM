@@ -41,6 +41,7 @@ private:
     bool                readValue(const std::string &tok);
     bool                readNumber(const std::string &tok);
     bool                readDecimal(const std::string &tok);
+    void                cleanValue(std::string &value);
 };
 
 #endif // LEXER_HH

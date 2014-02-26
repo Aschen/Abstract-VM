@@ -105,6 +105,7 @@ bool Lexer::readValue(const std::string &tok)
     if (tok.find(')', pos) + 1 != tok.length())
         throw Error(_line, _word, "Reading garbage after value. ( '" + tok.substr(tok.find(')', pos) + 1) + "')");
     value = tok.substr(pos + 1, tok.find(')', pos + 1) - pos - 1);
+    cleanValue(value);
     if (value.length() == 0)
         throw Error(_line, _word, "Invalid empty value '" + tok + "'");
     _tokenList.push_back(Token(it->second, type));
@@ -152,6 +153,30 @@ bool Lexer::readDecimal(const std::string &tok)
     return true;
 }
 
+void Lexer::cleanValue(std::string &str)
+{
+    std::string     tmp;
+    bool            f = true;
+    unsigned int    i = 0;
+
+    for(; i < str.length() && str[i] != '.'; i++)
+    {
+        if (ISNUM(str[i]) && str[i] != '0')
+            f = false;
+        if (str[i] == '0' && f)
+            continue;
+        tmp.push_back(str[i]);
+    }
+    while (i < str.length())
+    {
+        if (str[i] == '0')
+            break;
+        tmp.push_back(str[i++]);
+    }
+    str = tmp;
+}
+
+
 /////////////////////
 // Lexer::Error    //
 /////////////////////
@@ -164,7 +189,7 @@ const std::string Lexer::Error::getMessage(void) const
 {
     std::stringstream   ss;
 
-    ss << "Lexer Error : On line " << _line << " word " << _col << " : " << this->getError() << std::endl;
+    ss << "Lexer Error : On line " << _line << " word " << _col << " : " << this->getError();
     return ss.str();
 }
 

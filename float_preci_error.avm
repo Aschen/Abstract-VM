@@ -1,9 +1,0 @@
-;-------------
-; devrait retourner un resultat a 3 chiffre apres la virgule
-;-------------
-push    double(18.123)
-push    float(1003.67)
-dump
-add
-dump
-exit

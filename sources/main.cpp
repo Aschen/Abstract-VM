@@ -39,7 +39,7 @@ int main(int ac, char **av)
         else
             return printUsage(av[0]);
         Lexer   lex(buf);
-//        lex.dumpTokens();
+        lex.dumpTokens();
         Parser  pars(lex.getTokens(), NORMAL);
 
         core.run(pars.getInstructions());
