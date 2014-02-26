@@ -32,7 +32,7 @@ int main(int ac, char **av)
                 Input(eFlag(INTERACTIVE));
             else if (arg1 == "-f" && ac == 3)
 	      {
-		std::cout << "lolpd" << ac << std::endl;
+                std::cout << "lolpd" << ac << std::endl;
                 buf = (Input(av[2])).getBuf();
 	      }
             else
