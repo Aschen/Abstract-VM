@@ -1,31 +1,35 @@
 #include "Input.hh"
-#include "Exceptions.hh"
+#include "Lexer.hh"
+#include "Parser.hh"
 
-Input::Input(void)
+Input::Input(eFlag flag) : _flag(flag)
 {
     std::string buf;
-    bool        flag = true;
 
-    while (flag)
+    while (1)
     {
         std::getline(std::cin, buf, '\n');
-        if (buf == ";;")
-            flag = false;
+        if (buf == ";;" || (_flag == INTERACTIVE && buf == "exit"))
+            break;
         else if (buf.length() > 0)
-            _buf += this->epurLine(buf);
+        {
+            if (_flag == INTERACTIVE)
+                Parser(Lexer(this->epurLine(buf)).getTokens(), INTERACTIVE).dumpInstruction();
+            else
+                _buf += this->epurLine(buf);
+        }
     }
 }
 
-Input::Input(const std::string &file)
+Input::Input(const std::string &file) : _flag(NORMAL)
 {
     std::ifstream   fd(file.c_str());
     std::string     buf;
 
     if (!fd.is_open())
-        throw InputException(std::string("Can't open file : " + file));
+        throw Error(std::string("Can't open file : " + file));
     while (std::getline(fd, buf, '\n'))
-        if (buf.length() > 0)
-            _buf += this->epurLine(buf);
+        _buf += this->epurLine(buf);
     fd.close();
 }
 
@@ -47,14 +51,12 @@ std::string Input::getBuf(void) const
 
 std::string Input::epurLine(std::string line)
 {
-    std::string ret = line.substr(0, line.find(';', 0));
+    std::string     ret = line.substr(0, line.find(';', 0));
     unsigned int    pos = 0;
 
     while ((pos = ret.find("##", pos)) != ret.npos)
         ret.replace(pos, 2, "");
-    if (ret.length() > 0)
-        return ret + " ## ";
-    return ret;
+    return ret + " ## ";
 }
 
 std::ostream    &operator<<(std::ostream &os, const Input &other)
@@ -63,3 +65,16 @@ std::ostream    &operator<<(std::ostream &os, const Input &other)
         os << "Input : " << std::endl << std::endl << other.getBuf() << std::endl << "End";
     return os;
 }
+
+////////////////////
+// Input::Error   //
+////////////////////
+Input::Error::Error(const std::string error) : AvmException(error)
+{
+}
+
+const std::string   Input::Error::getMessage(void) const
+{
+    return "Input error : " + this->getError();
+}
+

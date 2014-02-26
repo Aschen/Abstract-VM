@@ -1,14 +1,14 @@
 ;-------------
 ;exemple.avm -
 ;-------------
-push    int32(42)
+push    double(32.2)
 push    int32(33)
-## add   ;
-add int8(32)
+add   ;
+add
 
-push float(44.55) ; lol
-mul ##
-##
+push float(44.55);lszh ; lol
+mul 
+
 push    double(42.42)
 push 	   int32(42)
 dump	
@@ -16,5 +16,3 @@ pop
 assert      double(42.42)
 ; xD	    
 exit
-
-
