@@ -1,5 +1,5 @@
 #include <fstream>
-#include "AbstractVm.hh"
+#include "Exceptions.hh"
 
 #ifndef INPUT_HH
 #define INPUT_HH
@@ -7,6 +7,14 @@
 
 class   Input
 {
+public:
+    class   Error : public AvmException
+    {
+    public:
+        Error(const std::string error);
+        ~Error(void) throw() {}
+        const std::string   getMessage(void) const;
+    };
 private:
     std::string   _buf;
     eFlag         _flag;

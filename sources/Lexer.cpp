@@ -68,7 +68,7 @@ void    Lexer::tokenize(void)
         else if (this->readValue(tok))
             ;
         else
-            throw LexerException(_line, _word, "Unknown token '" + tok + "'");
+            throw Error(_line, _word, "Unknown token '" + tok + "'");
         _word++;
     }
 }
@@ -99,15 +99,15 @@ bool Lexer::readValue(const std::string &tok)
 
     type = tok.substr(0, pos);
     if ((it = _tokens.find(type)) == _tokens.end())
-        throw LexerException(_line, _word, "Unknown Value Type '" + tok.substr(0, tok.find('(')) + "'");
+        throw Error(_line, _word, "Unknown Value Type '" + tok.substr(0, tok.find('(')) + "'");
     if (pos == tok.npos || tok.find(')', pos) == tok.npos)
-        throw LexerException(_line, _word, "Missing '(' or ')' near " + tok);
+        throw Error(_line, _word, "Missing '(' or ')' near " + tok);
     if (tok.find(')', pos) + 1 != tok.length())
-        throw LexerException(_line, _word, "Reading garbage after value. ( '" + tok.substr(tok.find(')', pos) + 1) + "')");
+        throw Error(_line, _word, "Reading garbage after value. ( '" + tok.substr(tok.find(')', pos) + 1) + "')");
 
     value = tok.substr(pos + 1, tok.find(')', pos + 1) - pos - 1);
     if (value.length() == 0)
-        throw LexerException(_line, _word, "Invalid empty value '" + tok + "'");
+        throw Error(_line, _word, "Invalid empty value '" + tok + "'");
 //  std::cout << "Add token " << _aff[it->second] << " : " << type << std::endl;
     _tokenList.push_back(Token(it->second, type));
     if (this->readNumber(value))
@@ -125,7 +125,7 @@ bool Lexer::readValue(const std::string &tok)
     else
     {
       _tokenList.pop_back();
-      throw LexerException(_line, _word, "Invalid value '" + tok.substr(pos) + "'");
+      throw Error(_line, _word, "Invalid value '" + tok.substr(pos) + "'");
     }
 }
 
@@ -156,3 +156,20 @@ bool Lexer::readDecimal(const std::string &tok)
     }
     return true;
 }
+
+/////////////////////
+// Lexer::Error    //
+/////////////////////
+Lexer::Error::Error(const unsigned int line, const unsigned int col, const std::string error)
+    : AvmException(error), _line(line), _col(col)
+{
+}
+
+const std::string Lexer::Error::getMessage(void) const
+{
+    std::stringstream   ss;
+
+    ss << "Lexer Error : On line " << _line << " word " << _col << " : " << this->getError() << std::endl;
+    return ss.str();
+}
+

@@ -1,4 +1,3 @@
-#include <valgrind/memcheck.h>
 #include "Parser.hh"
 #include "Exceptions.hh"
 
@@ -56,7 +55,7 @@ void Parser::parse(void)
         ;
     if (_flag == NORMAL)
         if (!this->readExit())
-            throw ParserException("Unable to find \"exit\" instruction.");
+            throw Error("Unable to find \"exit\" instruction.");
 }
 
 TokenCIterator &Parser::readInstructionLine(TokenCIterator &it)
@@ -77,9 +76,9 @@ TokenCIterator &Parser::readInstruction(TokenCIterator &it)
         if (it->first > VINSTR)
         {
             if (it != _tokenList.begin())
-                throw ParserException("Expected Instruction token", it->second, (it - 1)->second);
+                throw Error("Expected Instruction token", it->second, (it - 1)->second);
             else
-                throw ParserException("Expected Instruction token", it->second);
+                throw Error("Expected Instruction token", it->second);
         }
         instrType = _instructions[it->second];
         if (it->first == VINSTR)
@@ -98,7 +97,7 @@ TokenCIterator &Parser::readInstruction(TokenCIterator &it)
 eOperandType Parser::readValueType(TokenCIterator &it)
 {
     if (it->first != NTYPE && it->first != DTYPE) // Si it = _token.begin() fail ??
-        throw ParserException("Expected ValueType token", it->second, (it - 1)->second);
+        throw Error("Expected ValueType token", it->second, (it - 1)->second);
     return (_types.find(it->second))->second;
 }
 
@@ -107,11 +106,11 @@ std::string Parser::readValue(TokenCIterator &it, eOperandType type)
     std::string value;
 
     if (it->first != NUMBER && it->first != DECIMAL)
-        throw ParserException("Expected Value token", it->second, (it - 1)->second);
+        throw Error("Expected Value token", it->second, (it - 1)->second);
     if (type <= Int32 && it->first != NUMBER)
-        throw ParserException("Expected Number value", it->second, (it - 1)->second);
+        throw Error("Expected Number value", it->second, (it - 1)->second);
     if (type >= Float && it->first != DECIMAL)
-        throw ParserException("Expected Decimal value", it->second, (it - 1)->second);
+        throw Error("Expected Decimal value", it->second, (it - 1)->second);
     value = it->second;
     return value;
 }
@@ -121,7 +120,7 @@ TokenCIterator &Parser::readSeparator(TokenCIterator &it)
     if (it != _tokenList.end())
     {
         if (it->first != SEP)
-            throw ParserException("Expected Separator token", it->second, (it - 1)->second);
+            throw Error("Expected Separator token", it->second, (it - 1)->second);
         while (it->first == SEP)
             ++it;
     }
@@ -150,4 +149,31 @@ void Parser::dumpInstruction(void)
         std::cout << " - " << _affInstr[it->first] << " " << _affValue[it->second.first] << " " << it->second.second << "" << std::endl;
         ++it;
     }
+}
+
+////////////////////
+// Parser::Error  //
+////////////////////
+Parser::Error::Error(const std::string error) : AvmException(error), _token("")
+{
+}
+
+Parser::Error::Error(const std::string error, const std::string &token, const std::string &prevToken) : AvmException(error), _token(token), _prevToken(prevToken)
+{
+}
+
+Parser::Error::Error(const std::string error, const std::string &token) : AvmException(error), _token(token), _prevToken("")
+{
+}
+
+const std::string Parser::Error::getMessage(void) const
+{
+    if (_token.length() > 0)
+    {
+        if (_prevToken.length() > 0)
+            return "Parser error : " + this->getError() + " after '" + _prevToken + "' (have '" + _token + "')";
+        else
+            return "Parser error : " + this->getError() + " at beginning" + " (have '" + _token + "')";
+    }
+    return "Parser error : " + this->getError() + ".";
 }

@@ -8,6 +8,17 @@
 
 class   Lexer
 {
+public:
+    class   Error : public AvmException
+    {
+    private:
+        const unsigned int    _line;
+        const unsigned int    _col;
+    public:
+        Error(const unsigned int line, const unsigned int col, const std::string error);
+        ~Error(void) throw() {}
+        const std::string   getMessage(void) const;
+    };
 private:
     const std::string           _input;
     std::stringstream           _inputStream;

@@ -1,7 +1,6 @@
 #include "Input.hh"
 #include "Lexer.hh"
 #include "Parser.hh"
-#include "Exceptions.hh"
 
 Input::Input(eFlag flag) : _flag(flag)
 {
@@ -28,7 +27,7 @@ Input::Input(const std::string &file) : _flag(NORMAL)
     std::string     buf;
 
     if (!fd.is_open())
-        throw InputException(std::string("Can't open file : " + file));
+        throw Error(std::string("Can't open file : " + file));
     while (std::getline(fd, buf, '\n'))
         _buf += this->epurLine(buf);
     fd.close();
@@ -66,3 +65,16 @@ std::ostream    &operator<<(std::ostream &os, const Input &other)
         os << "Input : " << std::endl << std::endl << other.getBuf() << std::endl << "End";
     return os;
 }
+
+////////////////////
+// Input::Error   //
+////////////////////
+Input::Error::Error(const std::string error) : AvmException(error)
+{
+}
+
+const std::string   Input::Error::getMessage(void) const
+{
+    return "Input error : " + this->getError();
+}
+

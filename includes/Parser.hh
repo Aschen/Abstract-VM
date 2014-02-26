@@ -1,10 +1,24 @@
 #include "AbstractVm.hh"
+#include "Exceptions.hh"
 
 #ifndef PARSER_HH
 #define PARSER_HH
 
 class   Parser
 {
+public:
+    class   Error : public AvmException
+    {
+    private:
+        const std::string   _token;
+        const std::string   _prevToken;
+    public:
+        Error(const std::string error);
+        Error(const std::string error, const std::string &token, const std::string &prevToken);
+        Error(const std::string error, const std::string &token);
+        ~Error(void) throw() {}
+        const std::string   getMessage(void) const;
+    };
 private:
     typedef std::map<eOperandType, std::string> affValue;
     typedef std::map<eInstrType, std::string>   affInstr;
