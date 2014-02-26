@@ -5,17 +5,19 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Wed Feb 26 15:35:36 2014 brunne-r
-// Last update Wed Feb 26 15:42:26 2014 brunne-r
+// Last update Wed Feb 26 18:59:50 2014 brunne-r
 //
 
 #include "AvmCore.hh"
 
-AvmCore::AvmCore()
+AvmCore::AvmCore() : _ex(false)
 {
 }
 
 AvmCore::~AvmCore()
 {
+  if (!this->_ex)
+    throw AvmCore::Error("unable to find \"exit\" instruction");
 }
 
 void	AvmCore::run(const std::vector<Instruction> &list)
@@ -27,7 +29,21 @@ void	AvmCore::run(const std::vector<Instruction> &list)
   end = list.end();
   while (it < end && state)
     {
+      if ((*it).first == EXIT)
+	this->_ex = true;
       state = this->_Stack.exec(*it);
       ++it;
     }
+}
+
+AvmCore::Error::Error(const std::string error) : AvmException(error)
+{
+}
+
+const std::string AvmCore::Error::getMessage(void) const
+{
+    std::stringstream   ss;
+
+    ss << "Execution Error : " << this->getError() << std::endl;
+    return ss.str();
 }
