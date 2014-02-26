@@ -5,29 +5,52 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Mon Feb 24 12:39:02 2014 brunne-r
-// Last update Wed Feb 26 14:36:16 2014 brunne-r
+// Last update Wed Feb 26 15:30:23 2014 brunne-r
 //
 
 #include "VmStack.hh"
 
 VmStack::VmStack()
 {
-  this->type = Int8;
+  this->fptr[PUSH] = &VmStack::push;
+  this->fptr[ASSERT] = &VmStack::assert;
+  this->fptr[POP] = &VmStack::pop;
+  this->fptr[DUMP] = &VmStack::dump;
+  this->fptr[ADD] = &VmStack::add;
+  this->fptr[SUB] = &VmStack::sub;
+  this->fptr[MUL] = &VmStack::mul;
+  this->fptr[DIV] = &VmStack::div;
+  this->fptr[MOD] = &VmStack::mod;
+  this->fptr[PRINT] = &VmStack::print;
+  this->fptr[EXIT] = &VmStack::exit;
 }
 
 VmStack::~VmStack()
 {
+  std::vector<IOperand*>::iterator	it,end;
+
+  if (this->stack.size() > 0)
+    {
+      end = this->stack.end();
+      for (it = this->stack.begin(); it < end; it++)
+	{
+	  delete (*it);
+	}
+    }
 }
 
-void	VmStack::setArgument(const std::string &arg)
+bool		VmStack::push(void)
 {
-  this->argument = arg;
-}
+  IOperand	*op;
 
-bool	VmStack::push(void)
-{
-  this->stack.push_back(Factory::createOperand(this->type, this->argument));
-  return true;
+  op = Factory::createOperand(this->argument.first, this->argument.second);
+  if (op)
+    {
+      this->stack.push_back(op);
+      return true;
+    }
+  else
+    return false;
 }
 
 bool	VmStack::pop(void)
@@ -77,7 +100,7 @@ bool		VmStack::assert(void)
   else
     {
       last = this->stack.back();
-      if (!last || last->toString() != this->argument)
+      if (!last || last->toString() != this->argument.second)
 	std::cerr << "assert is false" << std::endl;
     }
   return true;
@@ -201,4 +224,18 @@ bool		VmStack::print(void)
 bool	VmStack::exit(void)
 {
   return false;
+}
+
+bool		VmStack::exec(Instruction instr)
+{
+  Value		arg;
+  StackMem	ptr;
+
+  if (instr.first == PUSH || instr.first == ASSERT)
+    {
+      arg = instr.second;
+      this->argument = arg;
+    }
+  ptr = this->fptr[instr.first];
+  return ((this->*ptr)());
 }

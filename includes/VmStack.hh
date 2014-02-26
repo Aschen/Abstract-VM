@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Mon Feb 24 12:20:26 2014 brunne-r
-// Last update Tue Feb 25 16:48:30 2014 brunne-r
+// Last update Wed Feb 26 15:31:18 2014 brunne-r
 //
 
 
@@ -18,14 +18,14 @@
 
 class VmStack
 {
+  typedef bool	(VmStack::*StackMem)(void);
 private:
   std::vector<IOperand*>	stack;
-  std::string			argument;
-  eOperandType			type;
+  Value				argument;
+  StackMem			fptr[11];
 public:
   VmStack();
   ~VmStack();
-  void	setArgument(const std::string &arg);
   bool	push(void);
   bool	pop(void);
   bool	dump(void);

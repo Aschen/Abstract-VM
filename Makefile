@@ -8,7 +8,7 @@
 ## Started on  19/02/2014 15:26
 ##
 
-CC	=	g++
+CXX	=	clang++
 
 SRCS	=	sources/Exceptions.cpp \
 		sources/Lexer.cpp \
@@ -19,8 +19,8 @@ SRCS	=	sources/Exceptions.cpp \
 		sources/Transform.cpp \
 		sources/Limits.cpp \
 		sources/VmStack.cpp \
+		sources/AvmCore.cpp \
 		sources/main.cpp
-
 CXXFLAGS=	-Wall -W -Wextra -Iincludes
 
 OBJS	=	$(SRCS:.cpp=.o)
@@ -30,7 +30,7 @@ NAME	=	avm
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) -o $(NAME) $(OBJS)
+	$(CXX) -o $(NAME) $(OBJS)
 
 clang:
 	clang++ $(SRCS) -o $(NAME) -Iincludes
