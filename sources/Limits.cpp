@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 25 11:53:36 2014 brunne-r
-// Last update Wed Feb 26 16:32:23 2014 brunne-r
+// Last update Wed Feb 26 18:00:13 2014 brunne-r
 //
 
 #include "Limits.hh"
@@ -14,11 +14,11 @@ template<typename T>
 void		Limits::check(const std::string &value)
 {
   T		ivalue;
-  std::string	test;
+  std::string	b;
 
   ivalue = Transform::stringToValue<T>(value);
-  Transform::valueToString<T>(ivalue, test);
-  if (test != value)
+  Transform::valueToString<T>(ivalue, b);
+  if (b != value)
     {
       if (value[0] == '-')
 	throw Limits::Error("underflow");
