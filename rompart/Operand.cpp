@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 // 
 // Started on  Tue Feb 18 16:05:55 2014 brunne-r
-// Last update Mon Feb 24 12:10:44 2014 brunne-r
+// Last update Tue Feb 25 17:02:47 2014 brunne-r
 //
 
 #include "AbstractVm.hh"
@@ -144,58 +144,23 @@ void view(IOperand *p)
     case Double:
       std::cout << "Double";
       break;
+    default:
+      break;
     }
   std::cout << std::endl;
 }
 
 int main()
 {
-  IOperand *a(NULL), *b(NULL), *c(NULL);
+  VmStack s;
 
-  std::cout << "OP+" << std::endl;
-  a = Factory::createOperand(Int8, "20");
-  b = Factory::createOperand(Int8, "66");
-  c = b->operator+(*a);
-  std::cout << a->toString() << "+" << b->toString() << "=" << c->toString() << std::endl;
-  delete a;
-  delete b;
-  delete c;
-
-  std::cout << "OP-" << std::endl;
-  a = Factory::createOperand(Int8, "20");
-  b = Factory::createOperand(Int8, "66");
-  c = a->operator-(*b);
-  std::cout << a->toString() << "-" << b->toString() << "=" << c->toString() << std::endl;
-  delete a;
-  delete b;
-  delete c;
-
-  std::cout << "OP*" << std::endl;
-  a = Factory::createOperand(Int8, "2");
-  b = Factory::createOperand(Int8, "20");
-  c = a->operator*(*b);
-  std::cout << a->toString() << "*" << b->toString() << "=" << c->toString() << std::endl;
-  delete a;
-  delete b;
-  delete c;
-
-  std::cout << "OP/" << std::endl;
-  a = Factory::createOperand(Int8, "20");
-  b = Factory::createOperand(Int8, "10");
-  c = a->operator/(*b);
-  std::cout << a->toString() << "/" << b->toString() << "=" << c->toString() << std::endl;
-  delete a;
-  delete b;
-  delete c;
-
-  std::cout << "OP%" << std::endl;
-  a = Factory::createOperand(Int8, "40");
-  b = Factory::createOperand(Int8, "15");
-  c = a->operator%(*b);
-  std::cout << a->toString() << "%" << b->toString() << "=" << c->toString() << std::endl;
-  delete a;
-  delete b;
-  delete c;
-
+  s.dump();
+  s.setArgument("12");
+  s.push();
+  s.dump();
+  s.setArgument("-129");
+  s.push();
+  s.setArgument("128");
+  s.push();
   return 0;
 }

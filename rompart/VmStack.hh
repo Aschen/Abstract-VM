@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 // 
 // Started on  Mon Feb 24 12:20:26 2014 brunne-r
-// Last update Mon Feb 24 16:59:22 2014 brunne-r
+// Last update Tue Feb 25 16:48:30 2014 brunne-r
 //
 
 #ifndef VMSTACK_H
@@ -13,17 +13,17 @@
 
 #include "AbstractVm.hh"
 
-
 class VmStack
 {
-  typedef	bool	(VmStack::*VmStackMember)(void);
 private:
   std::vector<IOperand*>	stack;
-  VmStackMember			operations[5];
   std::string			argument;
+  eOperandType			type;
 public:
-  VmStack(void);
-  ~VmStack(void);
+  VmStack();
+  ~VmStack();
+  void	setArgument(const std::string &arg);
+  bool	push(void);
   bool	pop(void);
   bool	dump(void);
   bool	assert(void);
@@ -40,5 +40,3 @@ public:
 };
 
 #endif /* !VMSTACK_H */
-
-

@@ -13,7 +13,7 @@ SRCS	=	Transform.cpp \
 		VmStack.cpp \
 		Operand.cpp \
 		Factory.cpp \
-
+		Limits.cpp \
 
 CXXFLAGS=	-W -Wall -Werror
 

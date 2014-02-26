@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Thu Feb 20 16:02:48 2014 brunne-r
-// Last update Tue Feb 25 15:07:17 2014 brunne-r
+// Last update Wed Feb 26 14:54:04 2014 brunne-r
 //
 
 #ifndef ABSTRACTVM_HH_
@@ -22,6 +22,9 @@ typedef enum	eOperandType
     Double
   }		eOperandType;
 
+# define int8	char
+# define int16	short
+# define int32	int
 
 # include <string>
 # include <sstream>

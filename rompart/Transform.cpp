@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 // 
 // Started on  Fri Feb 21 12:45:27 2014 brunne-r
-// Last update Fri Feb 21 14:32:59 2014 brunne-r
+// Last update Tue Feb 25 11:22:57 2014 brunne-r
 //
 
 #include "AbstractVm.hh"
@@ -32,6 +32,7 @@ template int16 Transform::stringToValue(const std::string &str);
 template int32 Transform::stringToValue(const std::string &str);
 template float Transform::stringToValue(const std::string &str);
 template double Transform::stringToValue(const std::string &str);
+template long double Transform::stringToValue(const std::string &str);
 
 template<typename U>
 void Transform::valueToString(const U &value, std::string &dest)

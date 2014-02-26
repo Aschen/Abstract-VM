@@ -5,26 +5,43 @@
 // Login   <brunne-r@epitech.net>
 // 
 // Started on  Mon Feb 24 12:39:02 2014 brunne-r
-// Last update Mon Feb 24 17:02:51 2014 brunne-r
+// Last update Wed Feb 26 14:36:16 2014 brunne-r
 //
 
 #include "AbstractVm.hh"
 
 VmStack::VmStack()
 {
+  this->type = Int8;
 }
 
 VmStack::~VmStack()
 {
 }
 
+void	VmStack::setArgument(const std::string &arg)
+{
+  this->argument = arg;
+}
+
+bool	VmStack::push(void)
+{
+  this->stack.push_back(Factory::createOperand(this->type, this->argument));
+  return true;
+}
+
 bool	VmStack::pop(void)
 {
   if (this->stack.empty())
-    std::cerr << "pop on a empty stack" << std::endl;
+    {
+      std::cerr << "pop on a empty stack" << std::endl;
+      return false;
+    }
   else
-    this->stack.pop_back();
-  return true;
+    {
+      this->stack.pop_back();
+      return true;
+    }
 }
 
 bool	VmStack::dump(void)
@@ -32,7 +49,10 @@ bool	VmStack::dump(void)
   std::vector<IOperand*>::const_iterator beg, end;
 
   if (this->stack.empty())
-    std::cerr << "dump on a empty stack" << std::endl;
+    {
+      std::cerr << "dump on a empty stack" << std::endl;
+      return false;
+    }
   else
     {
       beg = this->stack.begin();
@@ -50,7 +70,10 @@ bool		VmStack::assert(void)
   IOperand	*last;
 
   if (this->stack.empty())
-    std::cerr << "assert on a empty stack" << std::endl;
+    {
+      std::cerr << "assert on a empty stack" << std::endl;
+      return false;
+    }
   else
     {
       last = this->stack.back();
@@ -65,7 +88,10 @@ bool		VmStack::prepareOp(IOperand **a, IOperand **b)
   IOperand	*tmp;
 
   if (this->stack.size() < 2)
-    std::cerr << "arithmetic operations requires 2 values at least" << std::endl;
+    {
+      std::cerr << "arithmetic operations requires 2 values at least" << std::endl;
+      return false;
+    }
   else
     {
       *a = this->stack.back();
@@ -157,7 +183,10 @@ bool		VmStack::print(void)
   IOperand	*p;
 
   if (this->stack.empty())
-    std::cerr << "print on a empty stack" << std::endl;
+    {
+      std::cerr << "print on a empty stack" << std::endl;
+      return false;
+    }
   else
     {
       p = this->stack.back();
