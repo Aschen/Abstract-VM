@@ -18,7 +18,6 @@ int printUsage(char *name)
 int main(int ac, char **av)
 {
     std::string buf;
-    std::vector<Instruction> instrList;
     AvmCore		     core;
 
     try
@@ -39,8 +38,11 @@ int main(int ac, char **av)
             buf = (Input(NORMAL)).getBuf();
         else
             return printUsage(av[0]);
-        instrList = Parser(Lexer(buf).getTokens(), NORMAL).getInstructions();
-	core.run(instrList);
+        Lexer   lex(buf);
+        lex.dumpTokens();
+        Parser  pars(lex.getTokens(), NORMAL);
+
+        core.run(pars.getInstructions());
     }
     catch (AvmException &e)
     {

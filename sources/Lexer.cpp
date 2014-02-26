@@ -110,16 +110,16 @@ bool Lexer::readValue(const std::string &tok)
         throw Error(_line, _word, "Invalid empty value '" + tok + "'");
 //  std::cout << "Add token " << _aff[it->second] << " : " << type << std::endl;
     _tokenList.push_back(Token(it->second, type));
-    if (this->readNumber(value))
+    if (this->readDecimal(value))
     {
    //            std::cout << "Add token " << _aff[NUMBER] << " : " << value << std::endl;
-        _tokenList.push_back(Token(NUMBER, value));
+        _tokenList.push_back(Token(DECIMAL, value));
         return true;
     }
-    else if (this->readDecimal(value))
+    else if (this->readNumber(value))
     {
       //          std::cout << "Add token " << _aff[DECIMAL] << " : " << value << std::endl;
-        _tokenList.push_back(Token(DECIMAL, value));
+        _tokenList.push_back(Token(NUMBER, value));
         return true;
     }
     else
