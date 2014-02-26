@@ -11,7 +11,7 @@ public:
     class   Error : public AvmException
     {
     public:
-        Error(const std::string error);
+        Error(const std::string &error);
         ~Error(void) throw() {}
         const std::string   getMessage(void) const;
     };

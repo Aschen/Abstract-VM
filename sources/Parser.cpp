@@ -51,21 +51,20 @@ void Parser::parse(void)
 
     while (it->first == SEP)
         ++it;
-    while ((it = this->readInstructionLine(it)) != _tokenList.end())
-        ;
+    while (it != _tokenList.end())
+        this->readInstructionLine(it);
     if (_flag == NORMAL)
         if (!this->readExit())
             throw Error("Unable to find \"exit\" instruction.");
 }
 
-TokenCIterator &Parser::readInstructionLine(TokenCIterator &it)
+void Parser::readInstructionLine(TokenCIterator &it)
 {
-    it = this->readInstruction(it);
-    it = this->readSeparator(it);
-    return it;
+    this->readInstruction(it);
+    this->readSeparator(it);
 }
 
-TokenCIterator &Parser::readInstruction(TokenCIterator &it)
+void Parser::readInstruction(TokenCIterator &it)
 {
     eInstrType      instrType;
     eOperandType    valueType = Null;
@@ -91,7 +90,6 @@ TokenCIterator &Parser::readInstruction(TokenCIterator &it)
         _instrList.push_back(Instruction(instrType, Value(valueType, value)));
         ++it;
     }
-    return it;
 }
 
 eOperandType Parser::readValueType(TokenCIterator &it)
@@ -115,7 +113,7 @@ std::string Parser::readValue(TokenCIterator &it, eOperandType type)
     return value;
 }
 
-TokenCIterator &Parser::readSeparator(TokenCIterator &it)
+void Parser::readSeparator(TokenCIterator &it)
 {
     if (it != _tokenList.end())
     {
@@ -124,7 +122,6 @@ TokenCIterator &Parser::readSeparator(TokenCIterator &it)
         while (it->first == SEP)
             ++it;
     }
-    return it;
 }
 
 bool Parser::readExit(void)
@@ -159,15 +156,15 @@ std::vector<Instruction>	Parser::getInstructions(void) const
 ////////////////////
 // Parser::Error  //
 ////////////////////
-Parser::Error::Error(const std::string error) : AvmException(error), _token("")
+Parser::Error::Error(const std::string &error) : AvmException(error), _token("")
 {
 }
 
-Parser::Error::Error(const std::string error, const std::string &token, const std::string &prevToken) : AvmException(error), _token(token), _prevToken(prevToken)
+Parser::Error::Error(const std::string &error, const std::string &token, const std::string &prevToken) : AvmException(error), _token(token), _prevToken(prevToken)
 {
 }
 
-Parser::Error::Error(const std::string error, const std::string &token) : AvmException(error), _token(token), _prevToken("")
+Parser::Error::Error(const std::string &error, const std::string &token) : AvmException(error), _token(token), _prevToken("")
 {
 }
 

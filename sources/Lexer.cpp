@@ -180,7 +180,7 @@ void Lexer::cleanValue(std::string &str)
 /////////////////////
 // Lexer::Error    //
 /////////////////////
-Lexer::Error::Error(const unsigned int line, const unsigned int col, const std::string error)
+Lexer::Error::Error(const unsigned int line, const unsigned int col, const std::string &error)
     : AvmException(error), _line(line), _col(col)
 {
 }

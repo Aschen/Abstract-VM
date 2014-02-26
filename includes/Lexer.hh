@@ -15,7 +15,7 @@ public:
         const unsigned int    _line;
         const unsigned int    _col;
     public:
-        Error(const unsigned int line, const unsigned int col, const std::string error);
+        Error(const unsigned int line, const unsigned int col, const std::string &error);
         ~Error(void) throw() {}
         const std::string   getMessage(void) const;
     };
@@ -41,7 +41,7 @@ private:
     bool                readValue(const std::string &tok);
     bool                readNumber(const std::string &tok);
     bool                readDecimal(const std::string &tok);
-    void                cleanValue(std::string &value);
+    void                cleanValue(std::string &str);
 };
 
 #endif // LEXER_HH

@@ -75,7 +75,7 @@ std::ostream    &operator<<(std::ostream &os, const Input &other)
 ////////////////////
 // Input::Error   //
 ////////////////////
-Input::Error::Error(const std::string error) : AvmException(error)
+Input::Error::Error(const std::string &error) : AvmException(error)
 {
 }
 
