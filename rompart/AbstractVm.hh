@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 // 
 // Started on  Thu Feb 20 16:02:48 2014 brunne-r
-// Last update Mon Feb 24 15:00:17 2014 brunne-r
+// Last update Tue Feb 25 15:07:17 2014 brunne-r
 //
 
 #ifndef ABSTRACTVM_HH_
@@ -36,5 +36,6 @@ typedef enum	eOperandType
 # include "Factory.hh"
 # include "Transform.hh"
 # include "VmStack.hh"
+# include "Limits.hh"
 
 #endif /* !_ABSTRACTVM_HH_ */
