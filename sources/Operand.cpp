@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 18 16:05:55 2014 brunne-r
-// Last update Mon Feb 24 12:10:44 2014 brunne-r
+// Last update Thu Feb 27 11:00:07 2014 brunne-r
 //
 
 #include "Operand.hh"
@@ -13,7 +13,7 @@
 template<typename C>
 Operand<C>::Operand(std::string const& value, eOperandType const& type): _type(type)
 {
-  this->_accuracy = sizeof(C);
+  this->_accuracy = this->_type;
   this->_value = Transform::stringToValue<C>(value);
   this->_str = value;
 }
