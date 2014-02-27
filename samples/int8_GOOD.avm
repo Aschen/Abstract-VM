@@ -1,0 +1,11 @@
+;-------------
+; overflow a -128 (underflow?)
+;-------------
+push    int8(127)
+push    int8(-128)
+dump
+pop
+pop
+dump
+push int8(128)
+exit

@@ -1,0 +1,9 @@
+push int32(4)
+push int32(32)
+add
+assert int32(36)
+push double(50.5)
+sub
+assert double(14.5)    
+exit
+;;
