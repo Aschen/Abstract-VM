@@ -11,7 +11,7 @@ Input::Input(eFlag flag) : _flag(flag)
     while (std::getline(std::cin, buf, '\n'))
     {
 
-        if (buf == ";;" || (_flag == INTERACTIVE && buf == "exit"))
+        if (buf == ";;")
             break;
         else if (buf.length() > 0)
         {
