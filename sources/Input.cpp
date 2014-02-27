@@ -10,7 +10,6 @@ Input::Input(eFlag flag) : _flag(flag)
 
     while (std::getline(std::cin, buf, '\n'))
     {
-        std::cout << "-" << buf << "-" << std::endl;
         if (buf == ";;")
             break;
         else if (buf.length() > 0)
