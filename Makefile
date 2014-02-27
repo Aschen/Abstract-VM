@@ -8,7 +8,7 @@
 ## Started on  19/02/2014 15:26
 ##
 
-CXX	=	clang++
+CXX	=	g++
 
 SRCS	=	sources/Exceptions.cpp \
 		sources/Lexer.cpp \
@@ -21,6 +21,7 @@ SRCS	=	sources/Exceptions.cpp \
 		sources/VmStack.cpp \
 		sources/AvmCore.cpp \
 		sources/main.cpp
+
 CXXFLAGS=	-Wall -W -Wextra -Iincludes
 
 OBJS	=	$(SRCS:.cpp=.o)
@@ -31,9 +32,6 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS)
 	$(CXX) -o $(NAME) $(OBJS)
-
-clang:
-	clang++ $(SRCS) -o $(NAME) -Iincludes
 
 clean:
 	rm -f $(OBJS)
