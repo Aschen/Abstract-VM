@@ -37,12 +37,14 @@ Parser::Parser(const std::vector<Token> &tokenList, eFlag flag) : _tokenList(tok
     _affValue[Float] = "float";
     _affValue[Double] = "double";
     _affValue[Null] = "";
-    this->parse();
+    if (!_tokenList.empty())
+        this->parse();
 }
 
 Parser::Parser(const Parser &cpy) : _tokenList(cpy._tokenList), _types(cpy._types), _flag(cpy._flag)
 {
-    this->parse();
+    if (!_tokenList.empty())
+        this->parse();
 }
 
 void Parser::parse(void)
