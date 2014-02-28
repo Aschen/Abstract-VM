@@ -1,0 +1,7 @@
+push double(1.123456789)
+dump
+push double(1.000000001)
+dump
+sub
+dump
+exit
