@@ -10,6 +10,7 @@ Input::Input(eFlag flag) : _flag(flag)
 
     while (std::getline(std::cin, buf, '\n'))
     {
+        cleanLine(buf);
         if (buf == ";;")
             break;
         else if (buf.length() > 0)
@@ -38,7 +39,10 @@ Input::Input(const std::string &file) : _flag(NORMAL)
     if (!fd.is_open())
         throw Error(std::string("Can't open file : " + file));
     while (std::getline(fd, buf, '\n'))
+    {
+        cleanLine(buf);
         _buf += this->epurLine(buf);
+    }
     fd.close();
 }
 
@@ -58,7 +62,7 @@ std::string Input::getBuf(void) const
     return _buf;
 }
 
-std::string Input::epurLine(std::string line)
+std::string Input::epurLine(const std::string &line) const
 {
     std::string     ret = line.substr(0, line.find(';', 0));
     size_t	    pos = 0;
@@ -66,6 +70,12 @@ std::string Input::epurLine(std::string line)
     while ((pos = ret.find("##", pos)) != ret.npos)
         ret.replace(pos, 2, "");
     return ret + " ## ";
+}
+
+void Input::cleanLine(std::string &line) const
+{
+    while (line[0] == ' ')
+        line.erase(0, 1);
 }
 
 std::ostream    &operator<<(std::ostream &os, const Input &other)
@@ -84,6 +94,9 @@ Input::Error::Error(const std::string &error) : AvmException(error)
 
 const std::string   Input::Error::getMessage(void) const
 {
-    return "Input error : " + this->getError();
+    std::stringstream   ss;
+
+    ss << "Input error : " << this->getError();
+    return ss.str();
 }
 

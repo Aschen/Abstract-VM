@@ -94,14 +94,14 @@ void Parser::readInstruction(TokenCIterator &it)
     }
 }
 
-eOperandType Parser::readValueType(TokenCIterator &it)
+eOperandType Parser::readValueType(TokenCIterator &it) const
 {
-    if (it->first != NTYPE && it->first != DTYPE) // Si it = _token.begin() fail ??
+    if (it->first != NTYPE && it->first != DTYPE)
         throw Error("Expected ValueType token", it->second, (it - 1)->second);
     return (_types.find(it->second))->second;
 }
 
-std::string Parser::readValue(TokenCIterator &it, eOperandType type)
+const std::string Parser::readValue(TokenCIterator &it, eOperandType type) const
 {
     std::string value;
 
@@ -115,7 +115,7 @@ std::string Parser::readValue(TokenCIterator &it, eOperandType type)
     return value;
 }
 
-void Parser::readSeparator(TokenCIterator &it)
+void Parser::readSeparator(TokenCIterator &it) const
 {
     if (it != _tokenList.end())
     {
@@ -126,9 +126,9 @@ void Parser::readSeparator(TokenCIterator &it)
     }
 }
 
-bool Parser::readExit(void)
+bool Parser::readExit(void) const
 {
-    std::vector<Instruction>::iterator    it = _instrList.begin();
+    std::vector<Instruction>::const_iterator    it = _instrList.begin();
 
     while (it != _instrList.end())
     {
@@ -150,7 +150,7 @@ void Parser::dumpInstruction(void)
     }
 }
 
-std::vector<Instruction>	Parser::getInstructions(void) const
+const std::vector<Instruction>	Parser::getInstructions(void) const
 {
   return _instrList;
 }
@@ -172,12 +172,16 @@ Parser::Error::Error(const std::string &error, const std::string &token) : AvmEx
 
 const std::string Parser::Error::getMessage(void) const
 {
+    std::stringstream   ss;
+
     if (_token.length() > 0)
     {
         if (_prevToken.length() > 0)
-            return "Parser error : " + this->getError() + " after '" + _prevToken + "' (have '" + _token + "')";
+            ss << "Parser error : " << this->getError() << " after '" << _prevToken << "' (have '" << _token << "')";
         else
-            return "Parser error : " + this->getError() + " at beginning" + " (have '" + _token + "')";
+            ss << "Parser error : " << this->getError() << " at beginning" << " (have '" << _token << "')";
+        return ss.str();
     }
-    return "Parser error : " + this->getError() + ".";
+    ss << "Parser error : " << this->getError() << ".";
+    return ss.str();
 }

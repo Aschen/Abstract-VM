@@ -19,7 +19,7 @@ Lexer::Lexer(const std::string &input) : _input(input), _inputStream(input)
     this->_tokens["int32"] = NTYPE;
     this->_tokens["float"] = DTYPE;
     this->_tokens["double"] = DTYPE;
-    this->_tokens["entier"] = NUMBER; // mettre key vide ? ""
+    this->_tokens["entier"] = NUMBER;
     this->_tokens["decimal"] = DECIMAL;
     this->_tokens["unknown"] = UNKNOWN;
     this->_aff[VINSTR] = "VINSTR";
@@ -42,7 +42,7 @@ Lexer::Lexer(const Lexer &cpy) : _input(cpy._input), _inputStream(cpy._input), _
 
 void                Lexer::dumpTokens(void)
 {
-    std::vector<Token>::iterator    it = _tokenList.begin();
+    std::vector<Token>::const_iterator    it = _tokenList.begin();
 
     while (it != _tokenList.end())
     {
@@ -107,14 +107,13 @@ bool Lexer::readValue(const std::string &tok)
     if (tok.find(')', pos) + 1 != tok.length())
         throw Error(_line, _word, "Reading garbage after value. ( '" + tok.substr(tok.find(')', pos) + 1) + "')");
     value = tok.substr(pos + 1, tok.find(')', pos + 1) - pos - 1);
-    cleanValue(value);
     if (value.length() == 0)
         throw Error(_line, _word, "Invalid empty value '" + tok + "'");
     _tokenList.push_back(Token(it->second, type));
     if (this->readDecimal(value))
-        _tokenList.push_back(Token(DECIMAL, value));
+        _tokenList.push_back(Token(DECIMAL, cleanValue(value)));
     else if (this->readNumber(value))
-        _tokenList.push_back(Token(NUMBER, value));
+        _tokenList.push_back(Token(NUMBER, cleanValue(value)));
     else
     {
       _tokenList.pop_back();
@@ -123,7 +122,7 @@ bool Lexer::readValue(const std::string &tok)
     return true;
 }
 
-bool Lexer::readNumber(const std::string &tok)
+bool Lexer::readNumber(const std::string &tok) const
 {
     unsigned int    i = 0;
 
@@ -138,7 +137,7 @@ bool Lexer::readNumber(const std::string &tok)
 }
 
 
-bool Lexer::readDecimal(const std::string &tok)
+bool Lexer::readDecimal(const std::string &tok) const
 {
     unsigned int    i = 0;
 
@@ -155,27 +154,14 @@ bool Lexer::readDecimal(const std::string &tok)
     return true;
 }
 
-void Lexer::cleanValue(std::string &str)
+std::string &Lexer::cleanValue(std::string &str) const
 {
-    std::string     tmp;
-    bool            f = true;
-    unsigned int    i = 0;
-
-    for(; i < str.length() && str[i] != '.'; i++)
-    {
-        if (ISNUM(str[i]) && str[i] != '0')
-            f = false;
-        if (str[i] == '0' && f)
-            continue;
-        tmp.push_back(str[i]);
-    }
-    while (i < str.length())
-    {
-        if (str[i] == '0')
-            break;
-        tmp.push_back(str[i++]);
-    }
-    str = tmp;
+    while (str[0] == '0')
+        str.erase(0, 1);
+    if (str.find('.') != str.npos)
+        while (str[str.length() - 1] == '0')
+            str.erase(str.length() - 1, 1);
+    return str;
 }
 
 

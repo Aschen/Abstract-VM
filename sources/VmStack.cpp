@@ -237,7 +237,7 @@ bool		VmStack::exec(Instruction instr)
   return ((this->*ptr)());
 }
 
-VmStack::Error::Error(const std::string type, const std::string error) : AvmException(error), _type(type)
+VmStack::Error::Error(const std::string &type, const std::string &error) : AvmException(error), _type(type)
 {
 }
 

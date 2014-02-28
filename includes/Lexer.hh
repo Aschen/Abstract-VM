@@ -39,9 +39,9 @@ private:
     void                tokenize(void);
     bool                readInstr(const std::string &tok);
     bool                readValue(const std::string &tok);
-    bool                readNumber(const std::string &tok);
-    bool                readDecimal(const std::string &tok);
-    void                cleanValue(std::string &str);
+    bool                readNumber(const std::string &tok) const;
+    bool                readDecimal(const std::string &tok) const;
+    std::string         &cleanValue(std::string &str) const;
 };
 
 #endif // LEXER_HH

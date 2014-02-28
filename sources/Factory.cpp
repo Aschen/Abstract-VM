@@ -61,7 +61,7 @@ IOperand *Factory::createDouble(const std::string& value)
   return new Operand<double>(value, Double);
 }
 
-Factory::Error::Error(const std::string error) : AvmException(error)
+Factory::Error::Error(const std::string &error) : AvmException(error)
 {
 }
 

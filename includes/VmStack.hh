@@ -25,7 +25,7 @@ public:
     private:
       std::string _type;
     public:
-      Error(const std::string type, const std::string error);
+      Error(const std::string &type, const std::string &error);
       ~Error(void) throw() {}
       const std::string   getMessage(void) const;
     };

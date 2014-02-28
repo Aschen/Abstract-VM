@@ -26,7 +26,8 @@ public:
 
     std::string     getBuf(void) const;
 private:
-    std::string     epurLine(std::string line);
+    std::string     epurLine(const std::string &line) const;
+    void            cleanLine(std::string &line) const;
 };
 
 std::ostream    &operator<<(std::ostream &os, const Input &other);

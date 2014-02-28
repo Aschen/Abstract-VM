@@ -40,7 +40,7 @@ void	AvmCore::run(const std::vector<Instruction> &list)
     }
 }
 
-AvmCore::Error::Error(const std::string error) : AvmException(error)
+AvmCore::Error::Error(const std::string &error) : AvmException(error)
 {
 }
 

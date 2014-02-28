@@ -42,7 +42,9 @@ int main(int ac, char **av)
         else
             return printUsage(av[0]);
         Lexer   lex(buf);
+        lex.dumpTokens();
         Parser  pars(lex.getTokens(), NORMAL);
+        pars.dumpInstruction();
         core.run(pars.getInstructions());
     }
     catch (AvmException &e)

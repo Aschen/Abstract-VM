@@ -34,16 +34,16 @@ public:
     ~Parser(void) {}
     Parser(const Parser &cpy);
 
-    void            dumpInstruction(void);
-    std::vector<Instruction>	getInstructions(void) const;
+    void                            dumpInstruction(void);
+    const std::vector<Instruction>  getInstructions(void) const;
 private:
-    void            parse(void);
-    void            readInstructionLine(TokenCIterator &it);
-    void            readInstruction(TokenCIterator &it);
-    eOperandType    readValueType(TokenCIterator &it);
-    std::string     readValue(TokenCIterator &it, eOperandType type);
-    void            readSeparator(TokenCIterator &it);
-    bool            readExit(void);
+    void                parse(void);
+    void                readInstructionLine(TokenCIterator &it);
+    void                readInstruction(TokenCIterator &it);
+    eOperandType        readValueType(TokenCIterator &it) const;
+    const std::string   readValue(TokenCIterator &it, eOperandType type) const;
+    void                readSeparator(TokenCIterator &it) const;
+    bool                readExit(void) const;
 };
 
 

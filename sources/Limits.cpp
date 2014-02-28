@@ -18,7 +18,7 @@ void		Limits::check(const std::string &value)
 
   ivalue = Transform::stringToValue<T>(value);
   Transform::valueToString<T>(ivalue, b);
-  std::cout << "Str:" << value << "/Val:" << ivalue << "/" << b << std::endl;
+//  std::cout << "Str:" << value << "/Val:" << ivalue << "/" << b << std::endl;
   if (b != value)
     {
       if (value[0] == '-')
@@ -28,7 +28,7 @@ void		Limits::check(const std::string &value)
     }
 }
 
-Limits::Error::Error(const std::string error) : AvmException(error)
+Limits::Error::Error(const std::string &error) : AvmException(error)
 {
 }
 
