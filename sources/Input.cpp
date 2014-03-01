@@ -22,9 +22,7 @@ Input::Input(eFlag flag) : _flag(flag)
                 core.run(pars.getInstructions());
             }
             else
-            {
                 _buf += this->epurLine(buf);
-            }
         }
     }
     if (_flag == INTERACTIVE)
@@ -76,6 +74,8 @@ void Input::cleanLine(std::string &line) const
 {
     while (line[0] == ' ')
         line.erase(0, 1);
+    while (line[line.length() - 1] == ' ')
+        line.erase(line.length() - 1, 1);
 }
 
 std::ostream    &operator<<(std::ostream &os, const Input &other)
