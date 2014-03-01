@@ -1,7 +1,6 @@
-push double(1.23456789)
+push double(12.1)
+push double(3.1456)
 dump
-push double(0.11111111)
-dump
-sub
+mod
 dump
 exit

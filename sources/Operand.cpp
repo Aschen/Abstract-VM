@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 18 16:05:55 2014 brunne-r
-// Last update Thu Feb 27 11:00:07 2014 brunne-r
+// Last update Sat Mar  1 12:40:57 2014 brunne-r
 //
 
 #include "Operand.hh"
@@ -100,6 +100,7 @@ template<typename C>
 IOperand *Operand<C>::operator%(const IOperand &rhs) const
 {
   C		a(0), b(0), result(0);
+  size_t	tmp;
   std::string	s;
 
   b = Transform::stringToValue<C>(rhs.toString());
@@ -108,8 +109,9 @@ IOperand *Operand<C>::operator%(const IOperand &rhs) const
     std::cerr << "Modulo by 0" << std::endl;
   else
     {
-      result = a / b;
-      result = a - result * b;
+      tmp = a / b;
+      result = C(tmp) * b;
+      result = a - result;
     }
   Transform::valueToString<C>(result, s);
   return Factory::createOperand(this->getType(), s);

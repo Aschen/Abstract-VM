@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 25 11:53:36 2014 brunne-r
-// Last update Sat Mar  1 10:57:24 2014 brunne-r
+// Last update Sat Mar  1 11:59:19 2014 brunne-r
 //
 
 #include "Limits.hh"
@@ -18,8 +18,6 @@ void		Limits::check(const std::string &value)
 
   ivalue = Transform::stringToValue<T>(value);
   Transform::valueToString<T>(ivalue, b);
-  std::cout.precision(Transform::getStrPrecision(value));
-  std::cout << "Str:" << value << "/Val:" << ivalue << "/" << b << std::endl;
   if (b != value)
     {
       if (value[0] == '-')

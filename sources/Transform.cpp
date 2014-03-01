@@ -5,26 +5,10 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Fri Feb 21 12:45:27 2014 brunne-r
-// Last update Sat Mar  1 11:48:51 2014 brunne-r
+// Last update Sat Mar  1 11:59:51 2014 brunne-r
 //
 
 #include "Transform.hh"
-
-template<typename A>
-bool			isEqual(A one, A two, int precision)
-{
-  std::ostringstream	strma, strmb;
-  std::string		onecut, twocut;
-
-  strma.precision(precision + 2);
-  strmb.precision(precision + 2);
-  strma << one;
-  onecut = strma.str();
-  strmb << two;
-  twocut = strmb.str();
-  std::cout << onecut << " VS " << twocut << std::endl;
-  return (onecut == twocut);
-}
 
 unsigned int	Transform::getStrPrecision(const std::string &value)
 {
@@ -57,10 +41,8 @@ unsigned int	Transform::getPrecision(const S &value)
       strm << value;
       b = strm.str();
       strm.str("");
-      std::cout << a << " VS " << b << std::endl;
       i++;
     } while(a.size() != b.size());
-  std::cout << i << std::endl;
   return i;
 }
 
