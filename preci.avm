@@ -1,6 +1,6 @@
-push double(12.1)
-push double(3.1456)
+push int8(4)
+push int8(0)
 dump
-mod
+div
 dump
 exit

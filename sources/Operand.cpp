@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 18 16:05:55 2014 brunne-r
-// Last update Sat Mar  1 12:40:57 2014 brunne-r
+// Last update Sat Mar  1 13:33:02 2014 brunne-r
 //
 
 #include "Operand.hh"
@@ -89,7 +89,7 @@ IOperand *Operand<C>::operator/(const IOperand &rhs) const
   b = Transform::stringToValue<C>(rhs.toString());
   a = Transform::stringToValue<C>(this->toString());
   if (b == 0)
-    std::cerr << "Division by 0" << std::endl;
+    return NULL;
   else
     result = a / b;
   Transform::valueToString<C>(result, s);
@@ -106,7 +106,7 @@ IOperand *Operand<C>::operator%(const IOperand &rhs) const
   b = Transform::stringToValue<C>(rhs.toString());
   a = Transform::stringToValue<C>(this->toString());
   if (b == 0)
-    std::cerr << "Modulo by 0" << std::endl;
+    return NULL;
   else
     {
       tmp = a / b;
@@ -122,31 +122,3 @@ template Operand<int16>::Operand(std::string const& value, eOperandType const& t
 template Operand<int32>::Operand(std::string const& value, eOperandType const& type);
 template Operand<float>::Operand(std::string const& value, eOperandType const& type);
 template Operand<double>::Operand(std::string const& value, eOperandType const& type);
-
-void view(IOperand *p)
-{
-  std::cout << p->toString() << " , ";
-  std::cout << "Accuracy :" << p->getPrecision() << ", ";
-  switch(p->getType())
-    {
-    case Int8:
-      std::cout << "Int8";
-      break;
-    case Int16:
-      std::cout << "Int16";
-      break;
-    case Int32:
-      std::cout << "Int32";
-      break;
-    case Float:
-      std::cout << "Float";
-      break;
-    case Double:
-      std::cout << "Double";
-      break;
-    default:
-      std::cout << "nil";
-      break;
-    }
-  std::cout << std::endl;
-}
