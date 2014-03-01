@@ -5,10 +5,26 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Fri Feb 21 12:45:27 2014 brunne-r
-// Last update Fri Feb 28 14:47:49 2014 brunne-r
+// Last update Sat Mar  1 11:48:51 2014 brunne-r
 //
 
 #include "Transform.hh"
+
+template<typename A>
+bool			isEqual(A one, A two, int precision)
+{
+  std::ostringstream	strma, strmb;
+  std::string		onecut, twocut;
+
+  strma.precision(precision + 2);
+  strmb.precision(precision + 2);
+  strma << one;
+  onecut = strma.str();
+  strmb << two;
+  twocut = strmb.str();
+  std::cout << onecut << " VS " << twocut << std::endl;
+  return (onecut == twocut);
+}
 
 unsigned int	Transform::getStrPrecision(const std::string &value)
 {
@@ -26,25 +42,26 @@ unsigned int	Transform::getStrPrecision(const std::string &value)
 template<typename S>
 unsigned int	Transform::getPrecision(const S &value)
 {
-  size_t	trunc, it(10), i(0);
-  S		cut, rest, tmp(0);
+  std::ostringstream	strm;
+  std::string		a,b;
+  unsigned int		i;
 
-  trunc = size_t(value);
-  cut = trunc;
-  rest = value - cut;
-  if (rest == 0)
-    return 0;
-  while (value - cut > std::numeric_limits<S>::epsilon())
+  i = 1;
+  do
     {
-      cut -= tmp;
-      trunc = rest * it;
-      tmp = S(trunc);
-      tmp /= it;
-      cut += tmp;
-      it *= 10;
+      strm.precision(i);
+      strm << value;
+      a = strm.str();
+      strm.str("");
+      strm.precision(i + 1);
+      strm << value;
+      b = strm.str();
+      strm.str("");
+      std::cout << a << " VS " << b << std::endl;
       i++;
-    }
-  return i + 1;
+    } while(a.size() != b.size());
+  std::cout << i << std::endl;
+  return i;
 }
 
 template unsigned int	Transform::getPrecision(const int8 &value);
@@ -61,7 +78,6 @@ T Transform::stringToValue(const std::string &str)
   short			inter(0);
 
   strm.precision(Transform::getStrPrecision(str));
-  strm << std::fixed;
   if (sizeof(T) > 1)
     strm >> value;
   else

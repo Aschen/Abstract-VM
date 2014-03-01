@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Mon Feb 24 12:39:02 2014 brunne-r
-// Last update Wed Feb 26 19:23:55 2014 brunne-r
+// Last update Sat Mar  1 10:55:47 2014 brunne-r
 //
 
 #include "VmStack.hh"
@@ -78,6 +78,7 @@ bool	VmStack::dump(void)
       end = this->stack.end();
       for (beg = this->stack.begin(); beg < end; beg++)
 	{
+	  std::cout.precision(Transform::getStrPrecision((*beg)->toString()));
 	  std::cout << (*beg)->toString() << std::endl;
 	}
     }

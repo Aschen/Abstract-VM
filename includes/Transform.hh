@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Fri Feb 21 12:25:03 2014 brunne-r
-// Last update Fri Feb 28 14:41:05 2014 brunne-r
+// Last update Sat Mar  1 10:56:24 2014 brunne-r
 //
 #include "AbstractVm.hh"
 
@@ -16,12 +16,12 @@
 
 class Transform
 {
-private:
+public:
   template<typename S>
   static unsigned int	getPrecision(const S &value);
 
   static unsigned int	getStrPrecision(const std::string &value);
-public:
+
   template<typename T>
   static T		stringToValue(const std::string &str);
 

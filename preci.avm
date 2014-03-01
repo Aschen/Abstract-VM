@@ -1,6 +1,6 @@
-push double(00010000)
+push double(1.23456789)
 dump
-push double(0001.00200)
+push double(0.11111111)
 dump
 sub
 dump
