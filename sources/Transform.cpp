@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Fri Feb 21 12:45:27 2014 brunne-r
-// Last update Sun Mar  2 11:05:49 2014 brunne-r
+// Last update Sun Mar  2 11:17:13 2014 brunne-r
 //
 
 #include "Transform.hh"
@@ -17,7 +17,7 @@ unsigned int	Transform::getStrPrecision(const std::string &value)
   dot = value.find(".");
   if (dot != std::string::npos)
     {
-      return (value.size() - dot);
+      return ((value.size() - 1) - dot);
     }
   else
     return 0;
@@ -53,6 +53,7 @@ void Transform::valueToString(const U &value, std::string &dest, const unsigned 
   std::ostringstream	strm;
   
   strm.precision(precision);
+  strm << std::fixed;
   if (sizeof(U) > 1)
     strm << value;
   else

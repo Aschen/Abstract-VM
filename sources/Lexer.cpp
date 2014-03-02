@@ -159,7 +159,7 @@ std::string &Lexer::cleanValue(std::string &str) const
     while (str[0] == '0' && str[1] && str[1] != '.')
         str.erase(0, 1);
     if (str.find('.') != str.npos)
-        while (str[str.length() - 1] == '0')
+      while (str[str.length() - 1] == '0' && str[str.length() - 2] != '.')
             str.erase(str.length() - 1, 1);
     return str;
 }

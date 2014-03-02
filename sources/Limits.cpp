@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 25 11:53:36 2014 brunne-r
-// Last update Sun Mar  2 10:56:29 2014 brunne-r
+// Last update Sun Mar  2 11:09:59 2014 brunne-r
 //
 
 #include "Limits.hh"
@@ -22,6 +22,8 @@ void		Limits::check(const std::string &value)
   Transform::valueToString<T>(ivalue, b, prec);
   if (b != value)
     {
+      std::cout << "Precision:" << prec << std::endl;
+      std::cout << value << " VS " << b << std::endl;
       if (value[0] == '-')
 	throw Limits::Error("underflow");
       else
