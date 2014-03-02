@@ -1,6 +1,6 @@
-push int8(4)
-push int8(0)
+push double(1.123456789)
+push double(0.000111111)
 dump
-div
+sub
 dump
 exit

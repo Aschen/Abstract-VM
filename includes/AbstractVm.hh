@@ -68,4 +68,6 @@ typedef std::map<std::string, eInstrType>       InstructionMap;
 
 typedef std::vector<Token>::const_iterator      TokenCIterator;
 
+# define MAX(x, y) ((x > y) ? (x) : (y))
+
 #endif /* !_ABSTRACTVM_HH_ */

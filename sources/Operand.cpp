@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Tue Feb 18 16:05:55 2014 brunne-r
-// Last update Sat Mar  1 13:33:02 2014 brunne-r
+// Last update Sun Mar  2 11:04:28 2014 brunne-r
 //
 
 #include "Operand.hh"
@@ -46,11 +46,13 @@ IOperand *Operand<C>::operator+(const IOperand &rhs) const
 {
   C		a(0), b(0), result(0);
   std::string	s;
+  unsigned int	prec;
 
   b = Transform::stringToValue<C>(rhs.toString());
   a = Transform::stringToValue<C>(this->toString());
+  prec = MAX(Transform::getStrPrecision(rhs.toString()), Transform::getStrPrecision(this->toString()));
   result = a + b;
-  Transform::valueToString<C>(result, s);
+  Transform::valueToString<C>(result, s, prec);
   return Factory::createOperand(this->getType(), s);
 }
 
@@ -59,11 +61,13 @@ IOperand *Operand<C>::operator-(const IOperand &rhs) const
 {
   C		a(0), b(0), result(0);
   std::string	s;
+  unsigned int	prec;
 
   b = Transform::stringToValue<C>(rhs.toString());
   a = Transform::stringToValue<C>(this->toString());
+  prec = MAX(Transform::getStrPrecision(rhs.toString()), Transform::getStrPrecision(this->toString()));
   result = a - b;
-  Transform::valueToString<C>(result, s);
+  Transform::valueToString<C>(result, s, prec);
   return Factory::createOperand(this->getType(), s);
 }
 
@@ -72,11 +76,13 @@ IOperand *Operand<C>::operator*(const IOperand &rhs) const
 {
   C		a(0), b(0), result(0);
   std::string	s;
+  unsigned int	prec;
 
   b = Transform::stringToValue<C>(rhs.toString());
   a = Transform::stringToValue<C>(this->toString());
+  prec = MAX(Transform::getStrPrecision(rhs.toString()), Transform::getStrPrecision(this->toString()));
   result = a * b;
-  Transform::valueToString<C>(result, s);
+  Transform::valueToString<C>(result, s, prec);
   return Factory::createOperand(this->getType(), s);
 }
 
@@ -85,14 +91,16 @@ IOperand *Operand<C>::operator/(const IOperand &rhs) const
 {
   C		a(0), b(0), result(0);
   std::string	s;
+  unsigned int	prec;
 
   b = Transform::stringToValue<C>(rhs.toString());
   a = Transform::stringToValue<C>(this->toString());
+  prec = MAX(Transform::getStrPrecision(rhs.toString()), Transform::getStrPrecision(this->toString()));
   if (b == 0)
     return NULL;
   else
     result = a / b;
-  Transform::valueToString<C>(result, s);
+  Transform::valueToString<C>(result, s, prec);
   return Factory::createOperand(this->getType(), s);
 }
 
@@ -102,9 +110,11 @@ IOperand *Operand<C>::operator%(const IOperand &rhs) const
   C		a(0), b(0), result(0);
   size_t	tmp;
   std::string	s;
+  unsigned int	prec;
 
   b = Transform::stringToValue<C>(rhs.toString());
   a = Transform::stringToValue<C>(this->toString());
+  prec = MAX(Transform::getStrPrecision(rhs.toString()), Transform::getStrPrecision(this->toString()));
   if (b == 0)
     return NULL;
   else
@@ -113,7 +123,7 @@ IOperand *Operand<C>::operator%(const IOperand &rhs) const
       result = C(tmp) * b;
       result = a - result;
     }
-  Transform::valueToString<C>(result, s);
+  Transform::valueToString<C>(result, s, prec);
   return Factory::createOperand(this->getType(), s);
 }
 

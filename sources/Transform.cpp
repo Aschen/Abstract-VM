@@ -5,7 +5,7 @@
 // Login   <brunne-r@epitech.net>
 //
 // Started on  Fri Feb 21 12:45:27 2014 brunne-r
-// Last update Sat Mar  1 11:59:51 2014 brunne-r
+// Last update Sun Mar  2 11:05:49 2014 brunne-r
 //
 
 #include "Transform.hh"
@@ -22,35 +22,6 @@ unsigned int	Transform::getStrPrecision(const std::string &value)
   else
     return 0;
 }
-
-template<typename S>
-unsigned int	Transform::getPrecision(const S &value)
-{
-  std::ostringstream	strm;
-  std::string		a,b;
-  unsigned int		i;
-
-  i = 1;
-  do
-    {
-      strm.precision(i);
-      strm << value;
-      a = strm.str();
-      strm.str("");
-      strm.precision(i + 1);
-      strm << value;
-      b = strm.str();
-      strm.str("");
-      i++;
-    } while(a.size() != b.size());
-  return i;
-}
-
-template unsigned int	Transform::getPrecision(const int8 &value);
-template unsigned int	Transform::getPrecision(const int16 &value);
-template unsigned int	Transform::getPrecision(const int32 &value);
-template unsigned int	Transform::getPrecision(const float &value);
-template unsigned int	Transform::getPrecision(const double &value);
 
 template<typename T>
 T Transform::stringToValue(const std::string &str)
@@ -77,11 +48,11 @@ template float	Transform::stringToValue(const std::string &str);
 template double	Transform::stringToValue(const std::string &str);
 
 template<typename U>
-void Transform::valueToString(const U &value, std::string &dest)
+void Transform::valueToString(const U &value, std::string &dest, const unsigned int &precision)
 {
   std::ostringstream	strm;
-
-  strm.precision(Transform::getPrecision<U>(value));
+  
+  strm.precision(precision);
   if (sizeof(U) > 1)
     strm << value;
   else
@@ -89,8 +60,8 @@ void Transform::valueToString(const U &value, std::string &dest)
   dest = strm.str();
 }
 
-template void Transform::valueToString(const int8 &value, std::string &dest);
-template void Transform::valueToString(const int16 &value, std::string &dest);
-template void Transform::valueToString(const int32 &value, std::string &dest);
-template void Transform::valueToString(const float &value, std::string &dest);
-template void Transform::valueToString(const double &value, std::string &dest);
+template void Transform::valueToString(const int8 &value, std::string &dest, const unsigned int &precision);
+template void Transform::valueToString(const int16 &value, std::string &dest, const unsigned int &precision);
+template void Transform::valueToString(const int32 &value, std::string &dest, const unsigned int &precision);
+template void Transform::valueToString(const float &value, std::string &dest, const unsigned int &precision);
+template void Transform::valueToString(const double &value, std::string &dest, const unsigned int &precision);
