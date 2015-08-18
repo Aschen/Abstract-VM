@@ -23,7 +23,7 @@ int main(int ac, char **av)
     try
     {
         if (ac == 2)
-        {            
+        {
            std::string arg1(av[1]);
             if (arg1 == "-h" || arg1 == "--help")
                 return printUsage(av[0]);
